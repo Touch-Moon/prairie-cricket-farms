@@ -1,0 +1,101 @@
+@use "../../styles/mixins" as *;
+
+// ═══════════════════════════════════════════════════════════════
+//  AboutMission — Heading + 3-column image/text card grid
+// ═══════════════════════════════════════════════════════════════
+
+.section {
+  background-color: $color-bg-primary;
+}
+
+.inner {
+  max-width: $max-width-wide;
+  margin: 0 auto;
+  padding-left: $page-gutter-sm;
+  padding-right: $page-gutter-sm;
+  @include section-spacing;
+
+  @include md {
+    padding-left: $page-gutter-md;
+    padding-right: $page-gutter-md;
+  }
+
+  @include lg {
+    padding-left: $page-gutter-lg;
+    padding-right: $page-gutter-lg;
+  }
+}
+
+// ── Heading ───────────────────────────────────────────────────
+
+.heading {
+  font-family: $font-display;
+  font-style: italic;
+  font-weight: $fw-medium;
+  font-size: 64px;
+  line-height: $lh-display;
+  letter-spacing: $ls-tighter;
+  text-transform: uppercase;
+  color: $color-dark;
+  margin-bottom: $space-8;
+
+  @include lg {
+    margin-bottom: $space-10;
+  }
+}
+
+// ── Grid ──────────────────────────────────────────────────────
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $space-8;
+
+  @include lg {
+    grid-template-columns: repeat(3, 1fr);
+    gap: $space-6;
+  }
+}
+
+// ── Card ──────────────────────────────────────────────────────
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.imageWrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+}
+
+.image {
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.cardTitle {
+  font-family: $font-body;
+  font-weight: $fw-semibold;
+  font-size: $fs-md;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $color-dark;
+}
+
+.cardDesc {
+  font-family: $font-body;
+  font-weight: $fw-regular;
+  font-size: $fs-xl;
+  line-height: $lh-relaxed;
+  color: $color-text;
+}

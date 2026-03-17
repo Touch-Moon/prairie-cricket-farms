@@ -1,0 +1,230 @@
+@use "../../styles/mixins" as *;
+
+// Text slide rolling animation
+$slide-lh: 16px;
+
+.mask {
+  height: $slide-lh;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.slide {
+  display: block;
+  line-height: $slide-lh;
+  transition: transform 0.4s $ease-brand;
+
+  &::after {
+    content: attr(data-content);
+    display: block;
+    line-height: $slide-lh;
+  }
+}
+
+.submitBtn:not(:disabled):hover .slide {
+  transform: translateY(-50%);
+}
+
+.authPage {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $color-bg-primary;
+  padding: $space-8 $space-4;
+}
+
+.authCard {
+  width: 100%;
+  max-width: 440px;
+  background: #fff;
+  border: 1px solid rgba($color-dark, 0.1);
+  border-radius: 4px;
+  padding: $space-10 $space-8;
+
+  @include md {
+    padding: $space-12 $space-10;
+  }
+}
+
+.authLogo {
+  display: block;
+  font-family: $font-display;
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-align: center;
+  color: $color-dark;
+  margin-bottom: $space-8;
+  text-decoration: none;
+}
+
+.authHeading {
+  @include heading-display;
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  text-align: center;
+  margin-bottom: $space-2;
+}
+
+.authSubtext {
+  @include body-text;
+  text-align: center;
+  color: rgba($color-text, 0.55);
+  margin-bottom: $space-8;
+}
+
+// Auth Form
+.authForm {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.authField {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+
+  label {
+    @include eyebrow;
+    font-size: 11px;
+    color: $color-text;
+  }
+
+  input {
+    width: 100%;
+    height: 48px;
+    padding: 0 $space-4;
+    border: 1px solid rgba($color-dark, 0.2);
+    border-radius: 2px;
+    font-family: $font-body;
+    font-size: 14px;
+    color: $color-dark;
+    background: #fff;
+    transition: border-color $transition-fast;
+    outline: none;
+
+    &:focus {
+      border-color: $color-dark;
+    }
+
+    &::placeholder {
+      color: rgba($color-dark, 0.3);
+    }
+  }
+}
+
+.submitBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 52px;
+  margin-top: $space-2;
+  overflow: hidden;
+  background: transparent;
+  color: $color-dark;
+  border: 1.5px solid $color-dark;
+  border-radius: 0;
+  font-family: $font-body;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color $transition-button, color $transition-button;
+
+  &:hover {
+    background-color: $color-dark;
+    color: #fff;
+  }
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  margin: $space-2 0;
+
+  &::before,
+  &::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: rgba($color-dark, 0.1);
+  }
+
+  span {
+    font-size: 11px;
+    color: rgba($color-dark, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+}
+
+.googleBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-3;
+  width: 100%;
+  height: 52px;
+  border: 1.5px solid rgba($color-dark, 0.2);
+  border-radius: 0;
+  background: #fff;
+  font-family: $font-body;
+  font-size: 14px;
+  font-weight: 500;
+  color: $color-dark;
+  cursor: pointer;
+  transition: border-color $transition-button, background $transition-button;
+
+  &:hover {
+    border-color: $color-dark;
+    background: $color-bg-primary;
+  }
+
+  svg {
+    flex-shrink: 0;
+  }
+}
+
+.authFooter {
+  margin-top: $space-6;
+  text-align: center;
+  font-size: 13px;
+  color: rgba($color-dark, 0.5);
+
+  a {
+    color: $color-dark;
+    font-weight: 500;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+
+    &:hover {
+      color: $color-brand-green-dark;
+    }
+  }
+}
+
+// Error / Success messages
+.error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 2px;
+  padding-block: $space-3;
+  padding-inline: $space-4;
+  font-size: 13px;
+  color: #dc2626;
+}
+
+.success {
+  background: $color-brand-green-light;
+  border: 1px solid rgba($color-brand-green, 0.3);
+  border-radius: 2px;
+  padding-block: $space-3;
+  padding-inline: $space-4;
+  font-size: 13px;
+  color: $color-brand-green-dark;
+  text-align: center;
+}

@@ -1,0 +1,190 @@
+@use "../../styles/mixins" as *;
+
+// ═══════════════════════════════════════════════════════════════
+//  ProcessAudience — 4-column audience grid
+//  CategoryGrid 패턴 기반, 4-up layout
+// ═══════════════════════════════════════════════════════════════
+
+.section {
+  background-color: $color-bg-primary;
+  border-top: 1px solid $color-border;
+}
+
+.inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding-left: $page-gutter-sm;
+  padding-right: $page-gutter-sm;
+
+  @include section-spacing;
+
+  @include md {
+    padding-left: $page-gutter-md;
+    padding-right: $page-gutter-md;
+  }
+
+  @include lg {
+    padding-left: $page-gutter-lg;
+    padding-right: $page-gutter-lg;
+  }
+}
+
+// ── Header ────────────────────────────────────────────────────
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  margin-bottom: $space-12;
+
+  @include lg {
+    margin-bottom: $space-16;
+  }
+}
+
+.eyebrow {
+  font-family: $font-body;
+  font-weight: $fw-medium;
+  font-size: $fs-md;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $color-dark;
+}
+
+.heading {
+  font-family: $font-display;
+  font-style: italic;
+  font-weight: $fw-medium;
+  color: $color-dark;
+  line-height: $lh-display;
+  letter-spacing: $ls-tighter;
+  text-transform: uppercase;
+
+  font-size: $fs-10xl;
+
+  @include md {
+    font-size: $fs-12xl;
+  }
+
+  @include lg {
+    font-size: $fs-15xl;
+    letter-spacing: $ls-tightest;
+  }
+}
+
+// ── Grid ──────────────────────────────────────────────────────
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $space-10;
+
+  @include md {
+    grid-template-columns: repeat(2, 1fr);
+    gap: $space-6;
+  }
+
+  @include lg {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+// ── Card ──────────────────────────────────────────────────────
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: $space-6;
+}
+
+.imageWrap {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+}
+
+.image {
+  object-fit: cover;
+  transition: transform 0.6s $ease-brand;
+
+  .imageWrap:hover & {
+    transform: scale(1.04);
+  }
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.cardTitle {
+  font-family: $font-body;
+  font-size: $fs-2xl;
+  font-weight: $fw-semibold;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: $color-dark;
+}
+
+.cardDesc {
+  font-family: $font-body;
+  font-size: $fs-lg;
+  font-weight: $fw-regular;
+  color: $color-text;
+  line-height: $lh-relaxed;
+
+  @include lg {
+    font-size: $fs-xl;
+  }
+}
+
+// ── Button — underline wipe ──────────────────────────────────
+
+.btn {
+  display: inline-block;
+  position: relative;
+  align-self: flex-start;
+  overflow: hidden;
+
+  background: none;
+  border: none;
+  padding: 0 0 3px;
+  text-decoration: none;
+
+  font-family: $font-body;
+  font-size: $fs-md;
+  font-weight: $fw-medium;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $color-dark;
+  line-height: 120%;
+
+  &::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: $color-dark;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 200%;
+    height: 1px;
+    background-color: $color-bg-primary;
+    transform: translateX(-101%);
+    transition: transform 0.8s cubic-bezier(0.62, 0.05, 0.01, 0.99);
+  }
+
+  &:hover::after {
+    transform: translateX(51%);
+  }
+}

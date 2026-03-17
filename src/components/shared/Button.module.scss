@@ -1,0 +1,78 @@
+@use "../../styles/mixins" as *;
+
+// ── Shared Button Styles ─────────────────────────────────────────
+
+$btn-line-height: 16px;
+
+%btn-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+  height: 44px;
+  font-family: $font-body;
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.135px;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  border-radius: 0;
+  border: none;
+
+  @include lg {
+    height: 48px;
+    padding: 0 24px;
+  }
+}
+
+// ── Primary: slide-up text hover ─────────────────────────────────
+
+.primary {
+  @extend %btn-base;
+  background-color: $color-bg-primary;
+  color: $color-dark;
+  transition: background-color 0.4s $ease-brand;
+
+  &:hover {
+    background-color: $color-brand-yellow;
+  }
+}
+
+.mask {
+  height: $btn-line-height;
+  overflow: hidden;
+}
+
+.slide {
+  display: block;
+  line-height: $btn-line-height;
+  transition: transform 0.4s $ease-brand;
+
+  &::after {
+    content: attr(data-content);
+    display: block;
+    line-height: $btn-line-height;
+  }
+
+  .primary:hover &,
+  .secondary:hover & {
+    transform: translateY(-50%);
+  }
+}
+
+// ── Secondary: outline + slide-up hover ──────────────────────────
+
+.secondary {
+  @extend %btn-base;
+  background-color: transparent;
+  color: $color-dark;
+  border: 1.5px solid $color-dark;
+  transition: background-color 0.4s $ease-brand, color 0.4s $ease-brand;
+
+  &:hover {
+    background-color: $color-dark;
+    color: $color-white;
+  }
+}

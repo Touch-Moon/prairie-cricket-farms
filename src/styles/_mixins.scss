@@ -1,0 +1,318 @@
+// ═══════════════════════════════════════════════════════════════════════════
+//  _mixins.scss — Shared mixins & token re-exports
+//  Usage: @use '../../styles/mixins' as *;
+//  Provides all $tokens + @include mixins in a single import
+// ═══════════════════════════════════════════════════════════════════════════
+@use "sass:map";
+@forward "tokens";
+@use "tokens" as *;
+
+// ─── BREAKPOINT MIXINS ────────────────────────────────────────────────────
+
+@mixin sm {
+  @media (min-width: #{$bp-sm}) { @content; }
+}
+@mixin md {
+  @media (min-width: #{$bp-md}) { @content; }
+}
+@mixin lg {
+  @media (min-width: #{$bp-lg}) { @content; }
+}
+@mixin xl {
+  @media (min-width: #{$bp-xl}) { @content; }
+}
+@mixin xxl {
+  @media (min-width: #{$bp-2xl}) { @content; }
+}
+
+// Reduced motion — wrap any animation block
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: no-preference) { @content; }
+}
+
+// ─── CONTAINER ────────────────────────────────────────────────────────────
+
+@mixin container {
+  max-width: $max-width;
+  margin-inline: auto;
+  padding-inline: $page-gutter-sm;
+
+  @include md { padding-inline: $page-gutter-md; }
+  @include lg { padding-inline: $page-gutter-lg; }
+}
+
+@mixin container-wide {
+  max-width: $max-width-wide;
+  margin-inline: auto;
+  padding-inline: $page-gutter-sm;
+
+  @include md { padding-inline: $page-gutter-md; }
+  @include lg { padding-inline: $page-gutter-lg; }
+}
+
+@mixin container-narrow {
+  max-width: $max-width-narrow;
+  margin-inline: auto;
+  padding-inline: $page-gutter-sm;
+
+  @include md { padding-inline: $page-gutter-md; }
+}
+
+// ─── SECTION SPACING ──────────────────────────────────────────────────────
+
+@mixin section-spacing($mobile: $spacer-800, $desktop: null) {
+  $dt: map.get($spacer-responsive, 800);
+  @if $desktop != null { $dt: $desktop; }
+
+  padding-block: $mobile;
+  @include lg { padding-block: $dt; }
+}
+
+@mixin section-spacing-top($mobile: $spacer-800, $desktop: null) {
+  $dt: map.get($spacer-responsive, 800);
+  @if $desktop != null { $dt: $desktop; }
+  padding-top: $mobile;
+  @include lg { padding-top: $dt; }
+}
+
+@mixin section-spacing-bottom($mobile: $spacer-800, $desktop: null) {
+  $dt: map.get($spacer-responsive, 800);
+  @if $desktop != null { $dt: $desktop; }
+  padding-bottom: $mobile;
+  @include lg { padding-bottom: $dt; }
+}
+
+// Backward compatibility alias
+@mixin section-py($mobile: $spacer-800, $desktop: 96px) {
+  @include section-spacing($mobile, $desktop);
+}
+
+// ─── TYPOGRAPHY MIXINS ────────────────────────────────────────────────────
+
+// Display heading (Bodoni Moda) — hero, section hero
+@mixin heading-display($mobile-size: $fs-10xl, $desktop-size: $fs-15xl) {
+  font-family: $font-display;
+  font-style: normal;
+  font-weight: $fw-regular;
+  font-size: $mobile-size;
+  line-height: $lh-display;
+  letter-spacing: $ls-tighter;
+
+  @include lg {
+    font-size: $desktop-size;
+    letter-spacing: $ls-tightest;
+  }
+}
+
+// Section heading (Inter uppercase)
+@mixin heading-section($mobile-size: $fs-7xl, $desktop-size: $fs-11xl) {
+  font-family: $font-body;
+  font-weight: $fw-medium;
+  font-size: $mobile-size;
+  line-height: $lh-snug;
+  letter-spacing: $ls-tight;
+  text-transform: uppercase;
+
+  @include lg { font-size: $desktop-size; }
+}
+
+// Eyebrow label (small uppercase)
+@mixin eyebrow($size: $fs-sm) {
+  font-family: $font-body;
+  font-weight: $fw-medium;
+  font-size: $size;
+  line-height: $lh-none;
+  letter-spacing: $ls-wider;
+  text-transform: uppercase;
+}
+
+// Body copy
+@mixin body-text($mobile-size: $fs-lg, $desktop-size: $fs-xl) {
+  font-family: $font-body;
+  font-weight: $fw-regular;
+  font-size: $mobile-size;
+  line-height: $lh-loose;
+
+  @include lg { font-size: $desktop-size; }
+}
+
+// Caption / small text
+@mixin caption($size: $fs-base) {
+  font-family: $font-body;
+  font-weight: $fw-regular;
+  font-size: $size;
+  line-height: $lh-body;
+}
+
+// Button text style
+@mixin text-button {
+  font-family: $font-body;
+  font-weight: $fw-medium;
+  font-size: $btn-font-size;
+  letter-spacing: $btn-letter-spacing;
+  text-transform: uppercase;
+}
+
+// Fluid typography — clamp(min, preferred, max)
+// Usage: @include fluid-type(14px, 18px)
+@mixin fluid-type($min-size, $max-size, $min-vw: $bp-md, $max-vw: $bp-xl) {
+  font-size: clamp(
+    #{$min-size},
+    calc(#{$min-size} + (#{strip-unit($max-size)} - #{strip-unit($min-size)}) * ((100vw - #{$min-vw}) / (#{strip-unit($max-vw)} - #{strip-unit($min-vw)}))),
+    #{$max-size}
+  );
+}
+
+// ─── INTERACTION MIXINS ───────────────────────────────────────────────────
+
+// Underline reveal on hover (nav link pattern)
+@mixin hover-underline($color: currentColor, $height: 1px) {
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    bottom: -2px;
+    height: $height;
+    background: $color;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform $dur-slow $ease-smooth;
+  }
+
+  &:hover::after {
+    transform: scaleX(1);
+  }
+}
+
+// Opacity fade on hover
+@mixin hover-fade($opacity: $opacity-medium) {
+  transition: opacity $dur-fast ease;
+
+  &:hover {
+    opacity: $opacity;
+  }
+}
+
+// Focus ring (keyboard navigation)
+@mixin focus-ring($color: $color-brand-green, $offset: 3px) {
+  &:focus-visible {
+    outline: 2px solid $color;
+    outline-offset: $offset;
+  }
+
+  &:focus:not(:focus-visible) {
+    outline: none;
+  }
+}
+
+// Interactive state group — combines hover + focus-visible
+@mixin interactive($property: opacity, $value: $opacity-medium) {
+  &:is(:hover, :focus-visible) {
+    #{$property}: $value;
+  }
+}
+
+// ─── VISUAL MIXINS ────────────────────────────────────────────────────────
+
+// Object-fit cover fill
+@mixin cover-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+// Aspect ratio container
+@mixin aspect-ratio($ratio: 16 / 9) {
+  aspect-ratio: $ratio;
+  overflow: hidden;
+}
+
+// Gradient overlay via pseudo-element
+@mixin gradient-overlay($direction: to bottom, $from: rgba(0,0,0,0), $to: rgba(0,0,0,0.5)) {
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient($direction, $from, $to);
+    pointer-events: none;
+  }
+}
+
+// Visually hidden (accessible sr-only)
+@mixin sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Truncate text with ellipsis
+@mixin truncate($lines: 1) {
+  @if $lines == 1 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  } @else {
+    display: -webkit-box;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+// ─── GRID / LAYOUT HELPERS ────────────────────────────────────────────────
+
+// 2-column split layout (SplitFeature pattern)
+@mixin split-layout($gap: $space-8) {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $gap;
+
+  @include lg {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+// Responsive card grid
+@mixin card-grid($cols-mobile: 1, $cols-tablet: 2, $cols-desktop: 3, $gap: $space-6) {
+  display: grid;
+  grid-template-columns: repeat($cols-mobile, 1fr);
+  gap: $gap;
+
+  @include md { grid-template-columns: repeat($cols-tablet, 1fr); }
+  @include lg { grid-template-columns: repeat($cols-desktop, 1fr); }
+}
+
+// Flex row with gap
+@mixin flex-row($gap: $space-4, $wrap: wrap) {
+  display: flex;
+  flex-wrap: $wrap;
+  gap: $gap;
+}
+
+// Center content both axes
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// ─── UTILITY ──────────────────────────────────────────────────────────────
+
+// Strip unit from value (used by fluid-type)
+@function strip-unit($value) {
+  @return calc($value / ($value * 0 + 1));
+}
+
+// Spacing shorthand — symmetric block/inline
+@mixin spacing($block: 0, $inline: 0) {
+  padding-block: $block;
+  padding-inline: $inline;
+}

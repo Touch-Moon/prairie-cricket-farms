@@ -1,0 +1,63 @@
+@use "../../styles/mixins" as *;
+
+// ═══════════════════════════════════════════════════════════════
+//  AboutQuote — Large centered editorial quote block
+// ═══════════════════════════════════════════════════════════════
+
+.section {
+  background-color: $color-bg-primary;
+}
+
+.inner {
+  max-width: $max-width-wide;
+  margin: 0 auto;
+  padding-left: $page-gutter-sm;
+  padding-right: $page-gutter-sm;
+  @include section-spacing;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-5;
+
+  @include md {
+    padding-left: $page-gutter-md;
+    padding-right: $page-gutter-md;
+  }
+
+  @include lg {
+    padding-left: $page-gutter-lg;
+    padding-right: $page-gutter-lg;
+  }
+}
+
+.eyebrow {
+  font-family: $font-body;
+  font-weight: $fw-medium;
+  font-size: $fs-md;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $color-dark;
+  text-align: center;
+}
+
+.quote {
+  font-family: $font-display;
+  font-style: normal;
+  font-weight: 400;
+  text-align: center;
+  color: $color-dark;
+  line-height: 1.3;
+  margin: 0;
+
+  max-width: 100%;
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+
+  @include md {
+    max-width: calc(10 / 12 * 100%);
+  }
+
+  @include lg {
+    max-width: calc(8 / 12 * 100%);
+  }
+}

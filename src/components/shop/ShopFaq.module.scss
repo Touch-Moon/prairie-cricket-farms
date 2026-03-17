@@ -1,0 +1,154 @@
+@use "../../styles/mixins" as *;
+
+// ═══════════════════════════════════════════════════════════════
+//  ShopFaq — Eyebrow + large heading + accordion
+//  Matches absolutecollagen.com FAQ section style
+// ═══════════════════════════════════════════════════════════════
+
+.section {
+  background-color: $color-bg-primary;
+}
+
+.inner {
+  max-width: $max-width-wide;
+  margin: 0 auto;
+  padding: $spacer-900 $page-gutter-sm;
+
+  @include md {
+    padding: $spacer-900 $page-gutter-md;
+  }
+
+  @include lg {
+    padding: $spacer-1000 $page-gutter-lg;
+  }
+}
+
+// ── Header ─────────────────────────────────────────────────────
+
+.header {
+  text-align: center;
+  margin-bottom: $spacer-800;
+
+  @include lg {
+    margin-bottom: $spacer-900;
+  }
+}
+
+.eyebrow {
+  font-family: $font-body;
+  font-size: $fs-md; // 13px
+  font-weight: $fw-medium;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: $color-dark;
+  margin-bottom: $space-4;
+}
+
+.heading {
+  font-family: $font-display;
+  font-style: italic;
+  font-weight: $fw-medium;
+  text-transform: uppercase;
+  color: $color-dark;
+  line-height: $lh-display; // 96%
+  letter-spacing: $ls-tighter;
+
+  font-size: $fs-10xl; // 36px
+
+  @include md {
+    font-size: $fs-12xl; // 48px
+  }
+
+  @include lg {
+    font-size: $fs-15xl; // 64px
+    letter-spacing: $ls-tightest;
+  }
+}
+
+// ── Accordion list ─────────────────────────────────────────────
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid rgba($color-dark, 0.15);
+}
+
+.item {
+  border-bottom: 1px solid rgba($color-dark, 0.15);
+}
+
+// ── Trigger (question row) ─────────────────────────────────────
+
+.trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-8;
+  height: 52px;
+
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.question {
+  font-family: $font-body;
+  font-size: $fs-2xl; // 16px
+  font-weight: $fw-regular;
+  color: $color-dark;
+  line-height: 1.4;
+  transition: opacity $transition-fast;
+
+  @include lg {
+    font-size: $fs-3xl; // 18px
+  }
+}
+
+.icon {
+  flex-shrink: 0;
+  font-family: $font-body;
+  font-size: $fs-4xl; // 20px
+  font-weight: $fw-regular;
+  color: $color-dark;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+// ── Answer body (CSS grid trick for smooth height animation) ──
+
+.body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.45s $ease-brand;
+
+  &[aria-hidden="false"] {
+    grid-template-rows: 1fr;
+  }
+}
+
+// inner wrapper needed for grid-template-rows trick
+.bodyInner {
+  overflow: hidden;
+}
+
+.answer {
+  font-family: $font-body;
+  font-size: $fs-lg; // 14px
+  font-weight: $fw-regular;
+  color: $color-text;
+  line-height: 1.65;
+  max-width: 860px;
+  padding-bottom: $space-6;
+
+  @include lg {
+    font-size: $fs-xl; // 15px
+    padding-bottom: $space-8;
+  }
+}

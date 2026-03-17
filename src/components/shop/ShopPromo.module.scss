@@ -1,0 +1,204 @@
+@use "../../styles/mixins" as *;
+
+// ═══════════════════════════════════════════════════════════════
+//  ShopPromo — Video-left / Text-right split section
+//  Sits between CollectionHero and ProductGrid on /shop
+// ═══════════════════════════════════════════════════════════════
+
+.section {
+  background-color: $color-bg-primary;
+  overflow: hidden;
+}
+
+// ── Grid (50/50 split) ─────────────────────────────────────────
+
+.grid {
+  display: flex;
+  flex-direction: column;
+
+  @include lg {
+    flex-direction: row;
+    min-height: 560px;
+  }
+}
+
+// ── Left: Video col ────────────────────────────────────────────
+
+.colMedia {
+  flex: 0 0 50%;
+  background-color: #e8e4d4; // fallback before video loads
+
+  @include lg {
+    position: relative;
+  }
+}
+
+.video {
+  display: block;
+  width: 100%;
+  height: auto;
+
+  @include lg {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+// Video controls — bottom-left (play) + bottom-right (mute)
+.controls {
+  position: absolute;
+  bottom: $space-4; // 16px
+  left: $space-4;
+  right: $space-4;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  pointer-events: none;
+}
+
+.controlBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid rgba(255, 255, 255, 0.9);
+  border-radius: 0;
+  background: rgba(0, 0, 0, 0.25);
+  color: $color-white;
+  cursor: pointer;
+  pointer-events: all;
+  transition: background $transition-fast, border-color $transition-fast;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.5);
+  }
+}
+
+// ── Right: Text col ────────────────────────────────────────────
+
+.colText {
+  flex: 0 0 50%;
+  display: flex;
+  align-items: center;
+}
+
+.textInner {
+  display: flex;
+  flex-direction: column;
+  gap: $space-6; // 24px
+  padding: $space-12 $page-gutter-sm; // mobile
+
+  @include md {
+    padding: $space-16 $page-gutter-md;
+    gap: $space-8;
+  }
+
+  @include lg {
+    // Align inner content flush with grid left edge on right col
+    padding: $space-20 $page-gutter-lg $space-20
+      calc($page-gutter-lg + $space-8);
+    max-width: 640px;
+    gap: $space-8; // 32px
+  }
+}
+
+// ── Heading ────────────────────────────────────────────────────
+
+.heading {
+  font-family: $font-display;
+  font-style: italic;
+  font-weight: $fw-medium;
+  text-transform: uppercase;
+  color: $color-dark;
+  line-height: $lh-display; // 96%
+  letter-spacing: $ls-tighter;
+
+  font-size: $fs-10xl; // 36px
+
+  @include md {
+    font-size: $fs-12xl; // 48px
+  }
+
+  @include lg {
+    font-size: $fs-15xl; // 64px
+    letter-spacing: $ls-tightest;
+  }
+}
+
+// ── Body copy ──────────────────────────────────────────────────
+
+.copy {
+  font-family: $font-body;
+  font-weight: $fw-regular;
+  font-size: $fs-lg; // 14px
+  line-height: 1.6;
+  color: $color-text;
+  max-width: 460px;
+
+  @include lg {
+    font-size: $fs-xl; // 15px
+  }
+}
+
+// ── Button (secondary outline — mirrors SplitFeature) ──────────
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  align-self: flex-start;
+
+  background-color: transparent;
+  color: $color-dark;
+  text-decoration: none;
+  border: 1.5px solid $color-dark;
+
+  font-family: $font-body;
+  font-size: $fs-md; // 13px
+  font-weight: $fw-medium;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+
+  padding: 14px 28px;
+  height: 48px;
+
+  transition: background-color $transition-button, color $transition-button,
+    border-color $transition-button;
+
+  &:hover {
+    background-color: $color-dark;
+    color: $color-white;
+  }
+
+  &:hover .slidingText {
+    transform: translateY(-100%);
+    color: $color-white;
+
+    &::after {
+      color: $color-white;
+    }
+  }
+}
+
+.mask {
+  overflow: hidden;
+  position: relative;
+}
+
+.slidingText {
+  display: block;
+  position: relative;
+  transition: transform 0.4s $ease-brand;
+
+  &::after {
+    content: attr(data-content);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    white-space: nowrap;
+  }
+}

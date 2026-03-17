@@ -1,0 +1,481 @@
+@use "../../styles/mixins" as *;
+
+// Header height constant (fixed header offset)
+// mobile:  alert(36) + headerContainer(64) + quickNav(36) = 136px
+// desktop: alert(36) + headerContainer(96)               = 132px
+$header-offset-mobile: 136px;
+$header-offset-desktop: 132px;
+
+// ── Outer wrapper — full viewport width ───────────────────────
+.hero {
+  width: 100%;
+  background: $color-bg-primary;
+}
+
+// ── 50 / 50 split ─────────────────────────────────────────────
+.productHeroContent {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  @include lg {
+    flex-direction: row;
+    align-items: flex-start; // key to sticky behavior
+  }
+}
+
+// ── LEFT: sticky image panel - exactly 50vw ───────────────────
+.imagePanel {
+  // mobile: width 100%, height 4:5 ratio
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  background: #f5f2eb;
+  position: relative;
+  overflow: hidden;
+
+  @include lg {
+    // Completely independent of viewport height:
+    // width = 50vw (fixed), height = 50vw × 5/4 = 62.5vw (based on width)
+    flex-shrink: 0;
+    width: 50vw;
+    aspect-ratio: unset;
+    height: min(calc(50vw * 5 / 4), calc(100vh - #{$header-offset-desktop}));
+    height: min(calc(50vw * 5 / 4), calc(100svh - #{$header-offset-desktop})); // iOS Safari
+    position: sticky;
+    top: $header-offset-desktop;
+  }
+}
+
+// Keen-slider - fills panel
+.slider {
+  width: 100%;
+  height: 100%;
+  overflow: hidden; // 절대 visible 아님
+}
+
+.slide {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.heroSlideImage {
+  object-fit: cover;
+  object-position: center center;
+}
+
+// ── Diamond dots ──────────────────────────────────────────────
+.dots {
+  position: absolute;
+  bottom: $space-5;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: $space-3;
+  z-index: 2;
+  pointer-events: none; // prevent image drag interference
+
+  > * {
+    pointer-events: auto;
+  }
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  background: rgba(0, 0, 0, 0.25);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transform: rotate(45deg);
+  transition: background $transition-fast;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.55);
+  }
+}
+
+.dotActive {
+  background: $color-dark;
+}
+
+// ── RIGHT: scrollable info panel - exactly 50vw ───────────────
+.infoPanel {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: calc(#{$header-offset-mobile} + #{$space-8}) $space-6 $space-10;
+
+  @include lg {
+    width: 50vw;         // unified with imagePanel units
+    flex-shrink: 0;
+    padding: calc(#{$header-offset-desktop} + #{$space-12}) $space-10 $space-16;
+  }
+
+  @include xl {
+    padding: calc(#{$header-offset-desktop} + #{$space-16}) $space-12 $space-20;
+  }
+}
+
+// Actual content block - center-aligned inside right column
+.infoPanelInner {
+  width: 100%;
+  max-width: 550px;
+  display: flex;
+  flex-direction: column;
+  gap: $space-6;
+}
+
+// Breadcrumb (top of info panel)
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+}
+
+.breadcrumbLink {
+  font: 400 12px/1 $font-body;
+  color: #aaa;
+  text-decoration: none;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: $color-dark;
+  }
+}
+
+.breadcrumbSep {
+  font-size: 12px;
+  color: #ccc;
+}
+
+.breadcrumbCurrent {
+  font: 400 12px/1 $font-body;
+  color: $color-text;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 220px;
+}
+
+// Badge
+.productBadge {
+  display: inline-block;
+  width: fit-content;
+  background: $color-brand-green-light;
+  color: $color-dark;
+  font: 600 11px/1 $font-body;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: 2px;
+  align-self: flex-start;
+}
+
+// Title
+.productTitle {
+  @include heading-display;
+  font-size: 36px;
+  font-style: italic;
+  line-height: 1.05;
+  color: $color-dark;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+// Rating
+.rating {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+}
+
+.stars {
+  display: flex;
+  gap: 2px;
+  color: $color-dark;
+}
+
+.ratingScore {
+  font: 600 12px/1 $font-body;
+  color: $color-dark;
+}
+
+.reviewCount {
+  font: 400 12px/1 $font-body;
+  color: $color-text;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+// Price
+.priceBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.priceRow {
+  display: flex;
+  align-items: baseline;
+  gap: $space-3;
+}
+
+.comparePrice {
+  font: 400 17px/1 $font-body;
+  color: #aaa;
+  text-decoration: line-through;
+}
+
+.price {
+  font: 600 16px/1 $font-body;
+  color: $color-dark;
+}
+
+.saveText {
+  font: 400 13px/1 $font-body;
+  color: $color-brand-green-dark;
+  margin: 0;
+}
+
+// Description
+.description {
+  @include body-text;
+  font-size: 16px;
+  line-height: 1.35;
+  color: $color-text;
+  margin: 0;
+}
+
+// Benefits
+.benefits {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.benefitItem {
+  display: flex;
+  align-items: flex-start;
+  gap: $space-3;
+  font: 400 16px/1.35 $font-body;
+  color: $color-text;
+}
+
+.benefitPlus {
+  flex-shrink: 0;
+  font-weight: 700;
+  color: $color-dark;
+  font-size: 16px;
+  line-height: 1.35;
+}
+
+.benefitBullet {
+  flex-shrink: 0;
+  color: $color-dark;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+// Trust icons
+.trustRow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $space-3;
+  padding: 24px 0;
+}
+
+.trustItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+}
+
+.trustIcon {
+  color: $color-dark;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+}
+
+.trustLabel {
+  font: 600 10px/1.2 $font-body;
+  color: $color-dark;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.trustSub {
+  font: 400 10px/4px $font-body;
+  color: #999;
+}
+
+// Variant selector
+.variantSection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.variantLabel {
+  font: 600 13px/1 $font-body;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: $color-dark;
+  margin: 0;
+}
+
+.variantGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0;
+  overflow: hidden;
+}
+
+.variantCard {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: $space-4;
+  padding: 14px $space-4;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  background: $color-bg-primary;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.variantActive {
+  box-shadow: inset 0 0 0 1px $color-dark;
+  background: #fff;
+  position: relative;
+  z-index: 1;
+}
+
+.variantRadio {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(0, 0, 0, 0.3);
+  background: transparent;
+  position: relative;
+  transition: border-color $transition-fast;
+}
+
+.variantRadioActive {
+  border-color: $color-dark;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: $color-dark;
+  }
+}
+
+.variantInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.variantNameRow {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  flex-wrap: wrap;
+}
+
+.variantName {
+  font: 600 14px/1.2 $font-body;
+  color: $color-dark;
+}
+
+.variantBadge {
+  font: 600 9px/1 $font-body;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $color-brand-green-dark;
+  background: $color-brand-green-light;
+  border-radius: 2px;
+  padding: 3px 6px;
+}
+
+.variantSize {
+  font: 400 12px/1.3 $font-body;
+  color: #888;
+}
+
+.variantPrice {
+  font: 600 14px/1 $font-body;
+  color: $color-dark;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+// CTA
+.ctaSection {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.addToCart {
+  width: 100%;
+  padding: 20px $space-8;
+  background: $color-dark;
+  color: #fff;
+  font: 600 13px/1 $font-body;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background $transition-button, color $transition-button;
+
+  &:hover {
+    background: $color-brand-green;
+    color: $color-dark;
+  }
+}
+
+.addedToCart {
+  background: $color-brand-green !important;
+  color: $color-dark !important;
+}
+
+.atcError {
+  font: 400 12px/1.4 $font-body;
+  color: #c0392b;
+  text-align: center;
+  margin: 0 0 4px;
+}
+
+.shippingNote {
+  font: 400 12px/1.4 $font-body;
+  color: $color-dark;
+  text-align: center;
+  margin: 0;
+}

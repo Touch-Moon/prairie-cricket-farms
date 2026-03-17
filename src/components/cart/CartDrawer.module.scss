@@ -1,0 +1,564 @@
+@use "../../styles/mixins" as *;
+
+// Size constants
+$drawer-width: 440px;
+$drawer-width-sm: 100vw;
+$header-h: 64px;
+
+// Tint layer — opacity fade + click to close
+// (blur applied in globals.scss html.cart-open to
+//  page content via filter: blur)
+.tintLayer {
+  position: fixed;
+  inset: 0;
+  z-index: calc(#{$z-modal} - 1);
+  background: #ffffff3d;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.tintLayerVisible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+// ═══════════════════════════════════════════════
+// Drawer Panel
+// ═══════════════════════════════════════════════
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: $z-modal;
+  width: $drawer-width;
+  max-width: $drawer-width-sm;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.42s cubic-bezier(0.4, 0, 0, 1);
+  will-change: transform;
+  box-shadow: -4px 0 32px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+}
+
+.drawerOpen {
+  transform: translateX(0);
+}
+
+// ─── Header ──────────────────────────────────
+.cartDrawerHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 $space-6;
+  height: $header-h;
+  flex-shrink: 0;
+}
+
+.cartDrawerHeading {
+  font-family: $font-body;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: $color-dark;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.cartItemCount {
+  color: $color-text;
+}
+
+.closeBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: transparent;
+  color: $color-dark;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background $transition-fast;
+
+  &:hover {
+    background: $color-bg-primary;
+  }
+}
+
+.cartDivider {
+  height: 1px;
+  background: #e8e8e8;
+  flex-shrink: 0;
+}
+
+// ─── Body ──────────────────────────────────
+.cartItemContainer {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+
+  // 스크롤바 스타일
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #ddd;
+    border-radius: 2px;
+  }
+}
+
+// ─── Empty State ─────────────────────────
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: $space-4;
+  padding: $space-16 $space-6;
+  text-align: center;
+}
+
+.emptyText {
+  font-family: $font-body;
+  font-size: 16px;
+  color: #888;
+}
+
+.emptyLink {
+  @include eyebrow;
+  padding: 14px 28px;
+  background: $color-dark;
+  color: #fff;
+  text-decoration: none;
+  transition: background $transition-button;
+
+  &:hover {
+    background: $color-brand-green;
+    color: $color-dark;
+  }
+}
+
+// ─── Item List ───────────────────────────
+.itemList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.cartItem {
+  display: grid;
+  grid-template-columns: 80px 1fr 36px;
+  gap: $space-4;
+  padding: $space-5 $space-6;
+  border-bottom: 1px solid #f0f0f0;
+  align-items: start;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.itemThumb {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  width: 80px;
+  overflow: hidden;
+  background: $color-bg-primary;
+  flex-shrink: 0;
+}
+
+.itemThumbImg {
+  object-fit: cover;
+}
+
+.itemThumbPlaceholder {
+  width: 100%;
+  height: 100%;
+  background: $color-bg-primary;
+}
+
+.itemInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.itemTitle {
+  font-family: $font-body;
+  font-size: 13px;
+  font-weight: 500;
+  color: $color-dark;
+  line-height: 1.4;
+}
+
+.itemVariant {
+  font-family: $font-body;
+  font-size: 12px;
+  color: #888;
+}
+
+// 구독 빈도 셀렉트
+.frequencyRow {
+  margin-top: 4px;
+}
+
+.frequencySelect {
+  font-family: $font-body;
+  font-size: 12px;
+  color: $color-dark;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  padding-block: 2px;
+  padding-inline: 18px 0;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23333' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 2px center;
+  cursor: pointer;
+  width: max-content;
+  max-width: 100%;
+
+  &:focus {
+    outline: none;
+    border-bottom-color: $color-brand-green;
+  }
+}
+
+.itemPriceRow {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  margin-top: 6px;
+  flex-wrap: wrap;
+}
+
+.itemComparePrice {
+  font-family: $font-body;
+  font-size: 12px;
+  color: #aaa;
+  text-decoration: line-through;
+}
+
+.itemPrice {
+  font-family: $font-body;
+  font-size: 13px;
+  font-weight: 500;
+  color: $color-dark;
+}
+
+.itemSave {
+  display: inline-block;
+  width: fit-content;
+  font-family: $font-body;
+  font-size: 10px;
+  font-weight: 600;
+  color: $color-dark;
+  background: $color-brand-green-light;
+  padding: 2px 6px;
+  border-radius: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.removeBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  color: #bbb;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: color $transition-fast, background $transition-fast;
+  margin-top: 2px;
+
+  &:hover {
+    color: #e00;
+    background: #fff0f0;
+  }
+}
+
+// Promo Card (Congrats)
+.promoCard {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: $space-4;
+  margin-block: $space-5;
+  margin-inline: $space-6;
+  padding: $space-4;
+  background: $color-bg-primary;
+  border: 1px solid #ede8de;
+}
+
+.promoImage {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  width: 96px;
+  overflow: hidden;
+}
+
+.promoImg {
+  object-fit: cover;
+}
+
+.promoText {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.promoTitle {
+  font-family: $font-body;
+  font-size: 13px;
+  font-weight: 600;
+  color: $color-dark;
+}
+
+.promoDesc {
+  font-family: $font-body;
+  font-size: 12px;
+  color: #666;
+  line-height: 1.5;
+}
+
+.promoLink {
+  font-family: $font-body;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: $color-dark;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-transform: uppercase;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: $color-brand-green-dark;
+  }
+}
+
+// Upsell Section
+.upsellSection {
+  padding-block-end: $space-5;
+  padding-inline: $space-6;
+}
+
+.upsellHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $space-3;
+}
+
+.upsellTitle {
+  font-family: $font-body;
+  font-size: 13px;
+  font-weight: 500;
+  color: $color-dark;
+  letter-spacing: 0.02em;
+}
+
+.upsellNav {
+  display: flex;
+  gap: 4px;
+}
+
+.upsellNavBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid #e0e0e0;
+  background: transparent;
+  color: $color-dark;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background $transition-fast, border-color $transition-fast;
+
+  &:hover {
+    background: $color-bg-primary;
+    border-color: #ccc;
+  }
+}
+
+.upsellItem {
+  display: grid;
+  grid-template-columns: 72px 1fr auto;
+  gap: $space-3;
+  align-items: center;
+  padding: $space-3 0;
+  border-top: 1px solid #f0f0f0;
+}
+
+.upsellThumb {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  width: 72px;
+  overflow: hidden;
+  background: $color-bg-primary;
+}
+
+.upsellThumbImg {
+  object-fit: cover;
+}
+
+.upsellInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.upsellName {
+  font-family: $font-body;
+  font-size: 12px;
+  font-weight: 500;
+  color: $color-dark;
+  line-height: 1.4;
+}
+
+.priceBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: $font-body;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: $color-brand-green-light;
+  color: $color-dark;
+  padding: 3px 8px;
+  border-radius: 2px;
+  width: fit-content;
+}
+
+.upsellPriceRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.upsellPrice {
+  font-family: $font-body;
+  font-size: 12px;
+  font-weight: 500;
+  color: $color-dark;
+}
+
+.upsellCompare {
+  font-family: $font-body;
+  font-size: 11px;
+  color: #aaa;
+  text-decoration: line-through;
+}
+
+.upsellAdd {
+  padding: 10px 16px;
+  background: $color-dark;
+  color: #fff;
+  border: none;
+  font-family: $font-body;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background $transition-button;
+  white-space: nowrap;
+
+  &:hover {
+    background: $color-brand-green;
+    color: $color-dark;
+  }
+}
+
+// Cart Drawer Footer
+.cartDrawerFooter {
+  flex-shrink: 0;
+  padding-block: $space-4 $space-5;
+  padding-inline: $space-6;
+  border-top: 1px solid #e8e8e8;
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  background: #fff;
+}
+
+.totalRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.totalLabel {
+  font-family: $font-body;
+  font-size: 15px;
+  font-weight: 500;
+  color: $color-dark;
+}
+
+.totalPrice {
+  font-family: $font-body;
+  font-size: 15px;
+  font-weight: 600;
+  color: $color-dark;
+}
+
+.discountNote {
+  font-family: $font-body;
+  font-size: 11px;
+  color: #999;
+  margin-bottom: 4px;
+}
+
+.checkoutBtn {
+  width: 100%;
+  padding: 18px;
+  background: $color-dark;
+  color: #fff;
+  border: none;
+  font-family: $font-body;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background $transition-button;
+  margin-top: 4px;
+
+  &:hover {
+    background: $color-brand-green;
+    color: $color-dark;
+  }
+}
+
+// Payment Icons
+.paymentIcons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  padding-block-start: 4px;
+}
+
+.payIcon {
+  border-radius: 4px;
+  overflow: hidden;
+}

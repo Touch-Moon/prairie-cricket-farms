@@ -1,0 +1,130 @@
+@use "../../styles/mixins" as *;
+
+// ═══════════════════════════════════════════════════════════════
+//  ResultsGlance — 12 Week Results at a Glance
+// ═══════════════════════════════════════════════════════════════
+
+.section {
+  background-color: $color-bg-primary;
+  @include section-spacing;
+}
+
+.container {
+  @include container;
+  max-width: 1440px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+
+  @include lg {
+    flex-direction: row;
+    align-items: stretch;
+    gap: 64px;
+  }
+}
+
+.containerReverse {
+  @include lg {
+    flex-direction: row-reverse;
+  }
+}
+
+// ── Left column — heading + stats ────────────────────────────
+
+.left {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 48px;
+
+  @include lg {
+    flex: 1;
+    padding-left: 32px;
+  }
+}
+
+.eyebrow {
+  font-family: $font-body;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $color-dark;
+  line-height: 1;
+}
+
+// ── Stats 2×2 grid ──────────────────────────────────────────
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px 32px;
+
+  @include lg {
+    gap: 56px 64px;
+  }
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.number {
+  font-family: $font-display;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 56px;
+  line-height: 1;
+  color: $color-dark;
+  letter-spacing: -0.02em;
+
+  @include md {
+    font-size: 72px;
+  }
+
+  @include lg {
+    font-size: 88px;
+  }
+}
+
+.percent {
+  font-size: 0.45em;
+  vertical-align: super;
+  letter-spacing: 0;
+}
+
+.label {
+  font-family: $font-body;
+  font-size: 14px;
+  font-weight: 400;
+  color: $color-text;
+  line-height: 1.5;
+  max-width: 220px;
+
+  @include lg {
+    font-size: 15px;
+  }
+}
+
+// ── Right column — portrait image ───────────────────────────
+
+.right {
+  @include lg {
+    flex: 0 0 45%;
+    max-width: 45%;
+  }
+}
+
+.imageWrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+}
+
+.image {
+  object-fit: cover;
+  object-position: center top;
+}

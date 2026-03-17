@@ -1,0 +1,172 @@
+@use "../../styles/mixins" as *;
+
+// ═══════════════════════════════════════════════════════════════════
+//  HeroBanner — absolutecollagen.com split layout clone
+//  hero--story-2-col hero--story-text-split-left
+//  Mobile:  column (image top + green panel bottom)
+//  Desktop: row (green panel LEFT 50% + image RIGHT 50%)
+// ═══════════════════════════════════════════════════════════════════
+
+.hero {
+  width: 100%;
+  display: flex;
+  flex-direction: column; // mobile: stacked
+
+  @include lg {
+    flex-direction: row; // desktop: side by side
+  }
+}
+
+// ── Media (RIGHT on desktop, TOP on mobile) ───────────────────────
+
+.heroMedia {
+  width: 100%;
+  aspect-ratio: 1; // square on mobile
+  position: relative;
+  flex-shrink: 0;
+
+  @include lg {
+    width: 50%;
+    aspect-ratio: 4/5; // tall crop on desktop
+    order: 2; // appears on RIGHT
+  }
+}
+
+.mediaWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+.heroImage {
+  object-fit: cover;
+  object-position: center top;
+}
+
+// ── Inner / Green Panel (LEFT on desktop, BOTTOM on mobile) ─────
+
+.heroInner {
+  background-color: $color-brand-yellow;
+  padding: 48px 16px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+
+  @include lg {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    padding: 0 48px;
+    order: 1;
+    align-self: stretch;
+  }
+
+  @include xl {
+    padding: 0 64px;
+  }
+}
+
+// ── Content ───────────────────────────────────────────────────────
+
+.heroContent {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  @include lg {
+    max-width: 480px;
+    margin-top: auto; // push to bottom of flex parent
+    position: sticky;
+    bottom: 48px;
+    padding-bottom: 48px;
+  }
+}
+
+// ── Rating ────────────────────────────────────────────────────────
+
+.heroRating {
+  color: $color-dark;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0; // GSAP animates in
+}
+
+.heroRatingStars {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  color: $color-dark;
+}
+
+.heroRatingText {
+  font-family: $font-body;
+  font-size: 11px;
+  letter-spacing: -0.06px;
+  text-transform: uppercase;
+  font-weight: 500;
+  line-height: 120%;
+  color: $color-dark;
+
+  @include lg {
+    font-size: 13px;
+    letter-spacing: -0.07px;
+  }
+}
+
+// ── Heading ───────────────────────────────────────────────────────
+
+.heroHeading {
+  color: $color-dark;
+  font-family: $font-display;
+  font-size: 36px;
+  letter-spacing: -0.36px;
+  text-transform: uppercase;
+  font-style: italic;
+  font-weight: 500;
+  line-height: 96%;
+  margin-bottom: 24px;
+  opacity: 0; // GSAP animates in
+
+  @include lg {
+    font-size: 64px;
+    letter-spacing: -0.64px;
+    line-height: 96%;
+  }
+}
+
+// ── Description ───────────────────────────────────────────────────
+
+.heroDescription {
+  color: $color-dark;
+  font-family: $font-body; // body font (neue-haas-grotesk → Inter)
+  font-size: 16px;
+  letter-spacing: -0.08px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 135%;
+  margin-bottom: 16px;
+  opacity: 0; // GSAP animates in
+
+  @include lg {
+    max-width: 318px;
+  }
+}
+
+// ── Button Container ──────────────────────────────────────────────
+
+.heroButtonContainer {
+  display: flex;
+  justify-content: flex-start;
+  gap: 8px;
+  flex-wrap: wrap;
+  opacity: 0; // GSAP animates in
+
+  @include lg {
+    gap: 16px;
+  }
+}
+

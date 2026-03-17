@@ -1,0 +1,244 @@
+@use "../../styles/mixins" as *;
+
+// ═══════════════════════════════════════════════════════════════
+//  RecipeDetail - Single recipe page layout
+//  Hero: ProductHero 50/50 sticky split pattern applied
+//  Instructions: full-width numbered steps below
+// ═══════════════════════════════════════════════════════════════
+
+// Header height constant - same as ProductHero
+$header-offset-mobile: 136px;
+$header-offset-desktop: 132px;
+
+.article {
+  background-color: $color-bg-primary;
+}
+
+// ── Hero ──────────────────────────────────────────────────────
+
+.hero {
+  width: 100%;
+  background: $color-bg-primary;
+  padding-top: $header-offset-mobile;
+
+  @include lg {
+    padding-top: $header-offset-desktop;
+  }
+}
+
+// ── Image + Info split ────────────────────────────────────────
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  @include lg {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+// ── LEFT: sticky image panel - maintain aspect-ratio, max-width 50% ──
+
+.imagePanel {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  background: #f5f2eb;
+  position: relative;
+  overflow: hidden;
+
+  @include lg {
+    flex-shrink: 0;
+    // fix height based on viewport - aspect-ratio auto-calculates width
+    height: calc(100vh - #{$header-offset-desktop});
+    height: calc(100svh - #{$header-offset-desktop}); // iOS Safari
+    width: auto;
+    max-width: 50%;
+    position: sticky;
+    top: $header-offset-desktop;
+    align-self: flex-start;
+  }
+}
+
+.img {
+  object-fit: cover;
+}
+
+// ── RIGHT: info panel - fill remaining space ─────────────────────
+
+.infoPanel {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: $space-8 $space-6 $space-10;
+
+  @include lg {
+    flex: 1;
+    padding: calc(#{$header-offset-desktop} + #{$space-12}) $space-10 $space-16;
+  }
+
+  @include xl {
+    padding: calc(#{$header-offset-desktop} + #{$space-16}) $space-12 $space-20;
+  }
+}
+
+// Actual content block - center-aligned inside right column
+.infoPanelInner {
+  width: 100%;
+  max-width: 550px;
+  display: flex;
+  flex-direction: column;
+  gap: $space-6;
+}
+
+// ── Back link ─────────────────────────────────────────────────
+
+.backLink {
+  font-family: $font-body;
+  font-size: $fs-md;
+  font-weight: $fw-medium;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: $color-text;
+  text-decoration: none;
+  opacity: 0.6;
+  transition: opacity $transition-fast;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+// ── Badge ─────────────────────────────────────────────────────
+
+.badge {
+  display: inline-block;
+  font-family: $font-body;
+  font-size: $fs-md;
+  font-weight: $fw-medium;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  width: fit-content;
+  color: $color-dark;
+  background-color: $color-brand-green-light;
+  padding: 4px $space-3;
+  line-height: $lh-none;
+}
+
+// ── Title ─────────────────────────────────────────────────────
+
+.title {
+  font-family: $font-display;
+  font-style: italic;
+  font-weight: $fw-medium;
+  font-size: $fs-8xl;
+  line-height: $lh-display;
+  letter-spacing: $ls-tighter;
+  text-transform: uppercase;
+  color: $color-dark;
+  margin: 0;
+
+  @include md {
+    font-size: $fs-10xl;
+  }
+
+  @include lg {
+    font-size: $fs-8xl;
+  }
+
+  @include xl {
+    font-size: $fs-10xl;
+  }
+}
+
+// ── Meta list ─────────────────────────────────────────────────
+
+.metaList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: $space-8;
+  border-top: 1px solid rgba($color-dark, 0.12);
+  border-bottom: 1px solid rgba($color-dark, 0.12);
+  padding: $space-5 0;
+}
+
+.metaItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.metaLabel {
+  font-family: $font-body;
+  font-size: $fs-sm;
+  font-weight: $fw-medium;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: $color-text;
+  opacity: 0.5;
+}
+
+.metaValue {
+  font-family: $font-body;
+  font-size: $fs-base;
+  font-weight: $fw-medium;
+  color: $color-dark;
+}
+
+// ── Ingredients ───────────────────────────────────────────────
+
+.ingredients {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.sectionLabel {
+  font-family: $font-body;
+  font-size: $fs-md;
+  font-weight: $fw-medium;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: $color-dark;
+  margin: 0;
+}
+
+.ingredientList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.ingredientItem {
+  font-family: $font-body;
+  font-size: $fs-base;
+  font-weight: $fw-regular;
+  color: $color-text;
+  line-height: $lh-body;
+  padding-bottom: $space-3;
+  border-bottom: 1px solid rgba($color-dark, 0.08);
+
+  &:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+}
+
+.ingredientComment {
+  font-family: $font-body;
+  font-size: $fs-base;
+  font-weight: $fw-regular;
+  font-style: italic;
+  color: $color-dark;
+  line-height: $lh-body;
+  margin: $space-4 0 0;
+  padding-top: $space-4;
+  border-top: 1px solid rgba($color-dark, 0.08);
+}
+

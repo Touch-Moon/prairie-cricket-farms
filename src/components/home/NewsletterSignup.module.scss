@@ -1,0 +1,88 @@
+@use "../../styles/mixins" as *;
+
+// ═══════════════════════════════════════════════════════════════
+//  NewsletterSignup — email subscribe on yellow bg
+// ═══════════════════════════════════════════════════════════════
+
+.section {
+  background-color: $color-brand-yellow;
+  @include section-spacing;
+}
+
+.container {
+  @include container;
+  max-width: 1440px;
+}
+
+.heading {
+  font-family: $font-display;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 1.2;
+  color: $color-dark;
+  letter-spacing: -0.02em;
+  max-width: 480px;
+
+  @include lg {
+    font-size: 36px;
+  }
+}
+
+// ── Form ─────────────────────────────────────────────────────
+
+.form {
+  display: flex;
+  align-items: stretch;
+  margin-top: 32px;
+  max-width: 420px;
+  border: 1px solid $color-dark;
+
+  @include lg {
+    margin-top: 40px;
+  }
+}
+
+.input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  padding: 14px 16px;
+  font-family: $font-body;
+  font-size: 14px;
+  color: $color-dark;
+  outline: none;
+
+  &::placeholder {
+    color: rgba($color-dark, 0.45);
+  }
+}
+
+.submit {
+  flex-shrink: 0;
+  background: transparent;
+  border: none;
+  border-left: 1px solid $color-dark;
+  padding: 14px 20px;
+  font-family: $font-body;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $color-dark;
+  cursor: pointer;
+  transition: background-color 0.3s $ease-brand, color 0.3s $ease-brand;
+
+  &:hover {
+    background-color: $color-dark;
+    color: $color-white;
+  }
+}
+
+.successMessage {
+  font-size: 1rem;
+  color: $color-brand-green-dark;
+  font-weight: 500;
+  padding: $space-4 0;
+  letter-spacing: 0.02em;
+}

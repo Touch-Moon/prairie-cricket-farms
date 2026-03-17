@@ -1,0 +1,126 @@
+@use "../../styles/mixins" as *;
+
+// ═══════════════════════════════════════════════════════════════
+//  ContactHero — Contact page hero
+//  Eyebrow + italic display heading + optional description
+//  Centered layout on cream background
+//  Cloned from RecipesHero structure
+// ═══════════════════════════════════════════════════════════════
+
+.section {
+  background-color: $color-bg-primary;
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: $space-5;
+
+  max-width: $max-width-wide;
+  margin: 0 auto;
+  padding-left: $page-gutter-sm;
+  padding-right: $page-gutter-sm;
+  // Account for fixed header (announcement bar + nav + quick nav)
+  // mobile: alert(36) + nav+gap(64) + quickNav(~40) ≈ 140px → add $spacer-900(96px) breathing room
+  padding-top: calc(36px + 64px + 40px + #{$spacer-900});
+  padding-bottom: $spacer-700;
+
+  @include md {
+    padding-left: $page-gutter-md;
+    padding-right: $page-gutter-md;
+    gap: $space-6;
+  }
+
+  @include lg {
+    // desktop: alert(36) + nav+gap(96) = 132px → add $spacer-900(96px)
+    padding-left: $page-gutter-lg;
+    padding-right: $page-gutter-lg;
+    padding-top: calc(36px + 96px + #{$spacer-900});
+    padding-bottom: $spacer-800;
+  }
+}
+
+// ── Entry animation ────────────────────────────────────────────
+
+.eyebrow,
+.heading,
+.description {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.6s $ease-brand, transform 0.6s $ease-brand;
+}
+
+.heading {
+  transition-delay: 0.1s;
+}
+
+.description {
+  transition-delay: 0.2s;
+}
+
+.section.visible {
+  .eyebrow {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .heading {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .description {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ── Eyebrow ───────────────────────────────────────────────────
+
+.eyebrow {
+  font-family: $font-body;
+  font-weight: $fw-medium;
+  font-size: $fs-md;
+  line-height: $lh-none;
+  letter-spacing: -0.07px;
+  text-transform: uppercase;
+  color: $color-dark;
+}
+
+// ── Heading ───────────────────────────────────────────────────
+
+.heading {
+  font-family: $font-display;
+  font-style: italic;
+  font-weight: $fw-medium;
+  color: $color-dark;
+  line-height: $lh-display;
+  letter-spacing: $ls-tighter;
+  text-transform: uppercase;
+  max-width: 100%;
+
+  font-size: $fs-10xl;
+
+  @include md {
+    font-size: $fs-12xl;
+    max-width: calc(10 / 12 * 100%);
+  }
+
+  @include lg {
+    font-size: $fs-15xl;
+    letter-spacing: $ls-tightest;
+  }
+}
+
+// ── Description ───────────────────────────────────────────────
+
+.description {
+  font-family: $font-body;
+  font-weight: $fw-regular;
+  font-size: $fs-2xl;
+  line-height: $lh-relaxed;
+  color: $color-dark;
+  max-width: 640px;
+}

@@ -1,0 +1,73 @@
+@use "../../styles/mixins" as *;
+
+// ═══════════════════════════════════════════════════════════════
+//  CommunityBanner — full-width yellow CTA banner
+//  Parallax sticky reveal: 이전 섹션이 위로 걷히면서 이 섹션이 드러남
+// ═══════════════════════════════════════════════════════════════
+
+.communityBannerSection {
+  background-color: $color-brand-yellow;
+  @include section-spacing;
+}
+
+.container {
+  @include container;
+  max-width: 1440px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 24px;
+
+  @include lg {
+    gap: 32px;
+  }
+}
+
+.eyebrow {
+  font-family: $font-body;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $color-dark;
+  line-height: 1;
+}
+
+.heading {
+  font-family: $font-display;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 42px;
+  line-height: 1.05;
+  color: $color-dark;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+
+  @include md {
+    font-size: 64px;
+  }
+
+  @include lg {
+    font-size: 96px;
+  }
+}
+
+.cta {
+  display: inline-block;
+  font-family: $font-body;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $color-dark;
+  text-decoration: none;
+  border: 1px solid $color-dark;
+  padding: 14px 28px;
+  transition: background-color 0.4s $ease-brand, color 0.4s $ease-brand;
+
+  &:hover {
+    background-color: $color-dark;
+    color: $color-white;
+  }
+}

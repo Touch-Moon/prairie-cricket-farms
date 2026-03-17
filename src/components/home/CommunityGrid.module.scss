@@ -1,0 +1,215 @@
+@use "../../styles/mixins" as *;
+
+// ═══════════════════════════════════════════════════════════════
+//  CommunityGrid — keen-slider video tile carousel on green bg
+// ═══════════════════════════════════════════════════════════════
+
+.communityGridSection {
+  background-color: $color-brand-yellow;
+  padding-bottom: 0;
+  overflow-x: hidden;
+}
+
+// ── Slider Area ───────────────────────────────────────────────
+
+.sliderArea {
+  position: relative;
+}
+
+// ── keen-slider ───────────────────────────────────────────────
+
+.slider {
+  overflow: visible !important;
+  padding-left: 1rem;
+
+  @include md {
+    padding-left: 1.5rem;
+  }
+
+  @include lg {
+    padding-left: 2rem;
+    padding-right: 2rem;
+    max-width: 1440px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.slide {
+  user-select: none;
+}
+
+.ghostSlide {
+  pointer-events: none;
+  visibility: hidden;
+
+  @include lg {
+    display: none;
+  }
+}
+
+// ── Video tile ───────────────────────────────────────────────
+
+.tile {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: $color-dark;
+}
+
+.video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+// ── Controls ─────────────────────────────────────────────────
+
+.controls {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  color: $color-white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.btnPlay {
+  background: $color-white;
+  color: $color-dark;
+
+  &:hover {
+    opacity: 1;
+    background: #f0f0f0;
+  }
+}
+
+// ── Arrows ───────────────────────────────────────────────────
+
+.arrow {
+  position: absolute;
+  top: calc(50% - 10%);
+  transform: translateY(-50%);
+  z-index: 10;
+
+  width: 40px;
+  height: 40px;
+  border: none;
+  background-color: $color-dark;
+  color: $color-white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, background-color 0.2s ease;
+
+  @include lg {
+    width: 80px;
+    height: 80px;
+  }
+
+  &:hover {
+    background-color: #fff;
+    color: $color-dark;
+  }
+}
+
+.arrowVisible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.arrowLeft  { left: 0; }
+.arrowRight { right: 0; }
+
+.arrowInner {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.arrowMask {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+
+  svg { transition: transform 0.35s $ease-brand; }
+}
+
+.arrowIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.35s $ease-brand;
+}
+
+.arrowLeft  .arrowMask svg       { transform: translateX(160%); }
+.arrowLeft:hover .arrowMask svg  { transform: translateX(0); }
+.arrowLeft:hover .arrowIcon      { transform: translateX(-160%); }
+
+.arrowRight  .arrowMask svg      { transform: translateX(-160%); }
+.arrowRight:hover .arrowMask svg { transform: translateX(0); }
+.arrowRight:hover .arrowIcon     { transform: translateX(160%); }
+
+// ── Indicator bar ─────────────────────────────────────────────
+
+.indicatorWrap {
+  @include container;
+  max-width: 1440px;
+  margin-top: 24px;
+  padding-bottom: 40px;
+
+  @include lg {
+    margin-top: 32px;
+    padding-bottom: 48px;
+  }
+}
+
+.indicatorTrack {
+  position: relative;
+  height: 2px;
+  background-color: rgba($color-dark, 0.2);
+  border-radius: 1px;
+}
+
+.indicatorThumb {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  background-color: $color-dark;
+  border-radius: 1px;
+  transition: left 0.35s cubic-bezier(0.4, 0, 0, 1),
+              width 0.35s cubic-bezier(0.4, 0, 0, 1);
+}

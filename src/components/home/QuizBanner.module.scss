@@ -1,0 +1,124 @@
+@use "../../styles/mixins" as *;
+
+// ═══════════════════════════════════════════════════════════════
+//  QuizBanner — Yellow centered CTA section
+// ═══════════════════════════════════════════════════════════════
+
+.section {
+  background-color: $color-brand-yellow;
+  margin-top: 96px;
+  margin-bottom: 96px;
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 24px;
+  max-width: 1440px;
+  margin: 0 auto;
+
+  @include section-spacing;
+  padding-left: 1rem;
+  padding-right: 1rem;
+
+  @include md {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  @include lg {
+    gap: 28px;
+  }
+}
+
+.heading {
+  font-family: $font-display;
+  font-style: italic;
+  font-weight: 500;
+  color: $color-dark;
+  line-height: 96%;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+
+  font-size: 40px;
+
+  @include lg {
+    font-size: 64px;
+  }
+}
+
+.copy {
+  font-family: $font-body;
+  font-size: 15px;
+  font-weight: 400;
+  color: $color-dark;
+  line-height: 1.6;
+  max-width: 480px;
+  white-space: pre-line;
+
+  @include lg {
+    font-size: 16px;
+  }
+}
+
+// ── Button ────────────────────────────────────────────────────
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+
+  background-color: transparent;
+  color: $color-dark;
+  text-decoration: none;
+  border: 1.5px solid $color-dark;
+
+  font-family: $font-body;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+
+  padding: 14px 32px;
+  height: 48px;
+  margin-top: 8px;
+
+  transition: background-color 0.5s $ease-brand, color 0.5s $ease-brand;
+
+  &:hover {
+    background-color: $color-dark;
+    color: $color-white;
+  }
+
+  &:hover .slidingText {
+    transform: translateY(-100%);
+    color: $color-white;
+
+    &::after {
+      color: $color-white;
+    }
+  }
+}
+
+.mask {
+  overflow: hidden;
+  position: relative;
+}
+
+.slidingText {
+  display: block;
+  position: relative;
+  transition: transform 0.4s $ease-brand;
+
+  &::after {
+    content: attr(data-content);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    white-space: nowrap;
+    transition: transform 0.4s $ease-brand;
+  }
+}

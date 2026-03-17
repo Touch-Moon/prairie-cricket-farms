@@ -1,0 +1,38 @@
+@use "../../styles/mixins" as *;
+
+// ═══════════════════════════════════════════════════════════════
+//  BrandStatement — Large editorial text block
+// ═══════════════════════════════════════════════════════════════
+
+.section {
+  background-color: $color-bg-primary;
+}
+
+.inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+
+  @include section-spacing;
+
+  @include md {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+.text {
+  font-family: $font-display;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 115%;
+  letter-spacing: -0.02em;
+  color: $color-dark;
+  max-width: 100%;
+
+  @include md {
+    max-width: calc(10 / 12 * 100%);
+  }
+}

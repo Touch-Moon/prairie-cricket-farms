@@ -1,0 +1,213 @@
+@use "../../styles/mixins" as *;
+
+// ═══════════════════════════════════════════════════════════════
+//  AboutSplit — Green split section (text left + image right)
+//  SplitFeature 포맷 기반, $color-brand-green 배경 적용
+// ═══════════════════════════════════════════════════════════════
+
+.section {
+  background-color: $color-brand-green;
+  overflow: clip; // hidden → clip: 스크롤 컨텍스트 생성 안 함 → viewport sticky 작동
+}
+
+.wrapper {
+  overflow: clip; // hidden 대신 clip — 스크롤 컨텍스트 생성 안 함 → sticky 작동
+}
+
+// ── Grid ──────────────────────────────────────────────────────
+
+.grid {
+  display: flex;
+  flex-direction: column;
+
+  @include md {
+    flex-direction: row;
+  }
+}
+
+.colText {
+  flex: 0 0 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.colMedia {
+  flex: 0 0 50%;
+  position: relative;
+  aspect-ratio: 4 / 5;
+}
+
+.colMediaTop {
+  order: -1;
+
+  @include md {
+    order: unset;
+  }
+}
+
+// ── Text card ─────────────────────────────────────────────────
+
+.textCard {
+  padding: 48px 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+
+  @include md {
+    padding: 64px 1.5rem;
+  }
+
+  @include lg {
+    padding: 80px 2rem 80px calc((100vw - 1440px) / 2 + 2rem);
+    max-width: calc(1440px / 2 + (100vw - 1440px) / 2);
+    gap: 40px;
+    // Hero와 동일한 sticky 패턴
+    margin-top: auto;
+    position: sticky;
+    bottom: 48px;
+  }
+}
+
+// reverse: 이미지 왼쪽일 때 텍스트 padding 반전
+.textCardReverse {
+  @include lg {
+    padding: 80px calc((100vw - 1440px) / 2 + 2rem) 80px 2rem;
+  }
+}
+
+.textContent {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.textInner {
+  max-width: 432px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: center;
+}
+
+.heading {
+  font-family: $font-display;
+  font-size: 36px;
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: -0.36px;
+  color: $color-dark;
+  line-height: 96%;
+  text-transform: uppercase;
+
+  @include lg {
+    font-size: 64px;
+    letter-spacing: -0.64px;
+  }
+}
+
+.copy {
+  font-family: $font-body;
+  font-size: 15px;
+  font-weight: 400;
+  color: $color-dark;
+  line-height: 1.6;
+  max-width: 460px;
+
+  @include lg {
+    font-size: 16px;
+  }
+
+  p {
+    margin-bottom: $space-4;
+    &:last-child { margin-bottom: 0; }
+  }
+
+  em {
+    font-style: italic;
+  }
+}
+
+// ── CTAs ──────────────────────────────────────────────────────
+
+.ctas {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.btnSecondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+
+  background-color: transparent;
+  color: $color-dark;
+  text-decoration: none;
+  border: 1.5px solid $color-dark;
+
+  font-family: $font-body;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+
+  padding: 14px 28px;
+  height: 48px;
+
+  transition: background-color 0.5s $ease-brand, color 0.5s $ease-brand,
+    border-color 0.5s $ease-brand;
+
+  &:hover {
+    background-color: $color-dark;
+    color: $color-white;
+  }
+
+  &:hover .slidingText {
+    transform: translateY(-100%);
+    color: $color-white;
+
+    &::after {
+      color: $color-white;
+    }
+  }
+}
+
+.mask {
+  overflow: hidden;
+  position: relative;
+}
+
+.slidingText {
+  display: block;
+  position: relative;
+  transition: transform 0.4s $ease-brand;
+
+  &::after {
+    content: attr(data-content);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    white-space: nowrap;
+    transition: transform 0.4s $ease-brand;
+  }
+}
+
+// ── Media ─────────────────────────────────────────────────────
+
+.mediaWrap {
+  position: absolute;
+  inset: 0;
+
+  @media (max-width: 767px) {
+    inset: 16px;
+  }
+}
+
+.mediaImg {
+  object-fit: cover;
+  object-position: 50% 50%;
+}

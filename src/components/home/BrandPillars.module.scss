@@ -1,0 +1,184 @@
+@use "../../styles/mixins" as *;
+
+// ═══════════════════════════════════════════════════════════════
+//  BrandPillars — Left: large heading + CTA / Right: 3 pillar rows
+// ═══════════════════════════════════════════════════════════════
+
+.section {
+  background-color: $color-bg-primary;
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+
+  @include section-spacing;
+
+  @include md {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  @include lg {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 80px;
+  }
+}
+
+// ── Left column ───────────────────────────────────────────────
+
+.colLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+
+  @include lg {
+    flex: 0 0 45%;
+    position: sticky;
+    top: 120px;
+  }
+}
+
+.heading {
+  font-family: $font-display;
+  font-style: italic;
+  font-weight: 500;
+  color: $color-dark;
+  line-height: 96%;
+  letter-spacing: -0.36px;
+  text-transform: uppercase;
+
+  font-size: 36px;
+
+  @include lg {
+    font-size: 64px;
+    letter-spacing: -0.64px;
+  }
+}
+
+// ── Button ────────────────────────────────────────────────────
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  align-self: flex-start;
+
+  background-color: transparent;
+  color: $color-dark;
+  text-decoration: none;
+  border: 1.5px solid $color-dark;
+
+  font-family: $font-body;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+
+  padding: 14px 28px;
+  height: 48px;
+
+  transition: background-color 0.5s $ease-brand, color 0.5s $ease-brand;
+
+  &:hover {
+    background-color: $color-dark;
+    color: $color-white;
+  }
+
+  &:hover .slidingText {
+    transform: translateY(-100%);
+    color: $color-white;
+
+    &::after {
+      color: $color-white;
+    }
+  }
+}
+
+.mask {
+  overflow: hidden;
+  position: relative;
+}
+
+.slidingText {
+  display: block;
+  position: relative;
+  transition: transform 0.4s $ease-brand;
+
+  &::after {
+    content: attr(data-content);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    white-space: nowrap;
+    transition: transform 0.4s $ease-brand;
+  }
+}
+
+// ── Right column ──────────────────────────────────────────────
+
+.colRight {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+
+  @include lg {
+    flex: 1;
+  }
+}
+
+// ── Pillar row ────────────────────────────────────────────────
+
+.pillar {
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+  padding: 0;
+}
+
+.imageWrap {
+  position: relative;
+  flex: 0 0 90px;
+  height: 112px;
+  overflow: hidden;
+}
+
+.image {
+  object-fit: cover;
+}
+
+.pillarBody {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 4px;
+}
+
+.pillarHeading {
+  font-family: $font-body;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: $color-dark;
+  text-transform: none;
+}
+
+.pillarCopy {
+  font-family: $font-body;
+  font-size: 14px;
+  font-weight: 400;
+  color: $color-text;
+  line-height: 1.65;
+  max-width: 420px;
+
+  @include lg {
+    font-size: 15px;
+  }
+}

@@ -1,0 +1,244 @@
+// ═══════════════════════════════════════════════════════════════════════════
+//  _tokens.scss — Design Tokens
+//  Prairie Cricket Farms — shared across all pages and components
+// ═══════════════════════════════════════════════════════════════════════════
+@use "sass:map";
+
+// ─── 1. COLOR TOKENS ──────────────────────────────────────────────────────
+
+// Brand — Green
+$color-brand-green:        #00de5a;
+$color-brand-green-light:  #e6f7ed;
+$color-brand-green-dark:   #009a3e;
+
+// Legacy alias (backward compatibility — resolves to green)
+$color-brand-yellow:       $color-brand-green;
+$color-brand-yellow-light: $color-brand-green-light;
+
+// Neutral
+$color-dark:         #14171a;
+$color-text:         #37352f;
+$color-bg-primary:   #fffdf5;
+$color-white:        #ffffff;
+$color-black:        #000000;
+
+// Accent — Copper
+$color-copper:       #b06634;
+$color-copper-dark:  #8a5029;   // AA-compliant for text on white
+$color-copper-light: #ebd5b4;
+
+// UI
+$color-border:       #e5e5e5;
+$color-disabled:     #c4c4c4;
+$color-hover-light:  #f0f0f0;
+
+// Overlay
+$color-overlay-dark:   rgba(#14171a, 0.12);
+$color-overlay-medium: rgba(#14171a, 0.15);
+$color-overlay-brand:  rgba(152, 134, 6, 0.24);
+$color-bg-frosted:     #fffdf099;   // quickNav glass effect
+
+// ─── 2. FONT TOKENS ──────────────────────────────────────────────────────
+
+$font-display: var(--font-display);
+$font-body:    var(--font-body);
+
+// 2-a. Font-size Scale (mobile-first)
+$fs-2xs:   9px;    // badge
+$fs-xs:   10px;    // tag, small cta
+$fs-sm:   11px;    // eyebrow, footer title
+$fs-base: 12px;    // viewAll, eyebrow, small nav
+$fs-md:   13px;    // button, nav link, card title
+$fs-lg:   14px;    // body copy (mobile)
+$fs-xl:   15px;    // body copy (desktop)
+$fs-2xl:  16px;    // body, description, logo
+$fs-3xl:  18px;    // mega menu link, footer link desktop
+$fs-4xl:  20px;    // logo desktop
+$fs-5xl:  22px;    // article title mobile
+$fs-6xl:  24px;    // press quote mobile
+$fs-7xl:  28px;    // section heading mobile
+$fs-8xl:  32px;    // press quote tablet
+$fs-9xl:  34px;    // article title desktop
+$fs-10xl: 36px;    // hero/section heading mobile
+$fs-11xl: 40px;    // section heading desktop-sm
+$fs-12xl: 48px;    // section heading tablet
+$fs-13xl: 56px;    // stats number mobile
+$fs-14xl: 60px;    // section heading desktop
+$fs-15xl: 64px;    // hero/section heading desktop
+$fs-16xl: 72px;    // stats number tablet
+$fs-17xl: 88px;    // stats number desktop
+$fs-18xl: 96px;    // mega heading desktop
+
+// 2-b. Font-weight
+$fw-regular:  400;
+$fw-medium:   500;
+$fw-semibold: 600;
+$fw-bold:     700;
+
+// 2-c. Line-height Scale
+$lh-none:    1;
+$lh-tight:   1.05;
+$lh-snug:    1.15;
+$lh-heading: 1.2;
+$lh-lead:    1.25;
+$lh-relaxed: 1.35;
+$lh-body:    1.5;
+$lh-loose:   1.6;
+$lh-prose:   1.65;
+
+// Percentage-based (Bodoni Moda display headings)
+$lh-display:    96%;
+$lh-display-md: 120%;
+$lh-display-lg: 135%;
+
+// 2-d. Letter-spacing
+$ls-tightest: -0.64px;  // desktop hero heading
+$ls-tighter:  -0.36px;  // mobile hero heading
+$ls-tight:    -0.02em;  // section heading
+$ls-snug:     -0.01em;  // article title, quote
+$ls-normal:    0;
+$ls-wide:      0.06em;  // nav, button, cta link
+$ls-wider:     0.08em;  // eyebrow, group heading
+$ls-widest:    0.1em;   // editorial eyebrow
+
+// ─── 3. SPACING TOKENS ───────────────────────────────────────────────────
+
+// 3-a. Base Scale (4px grid)
+$space-0:    0;
+$space-1:    4px;
+$space-2:    8px;    // = spacer-100
+$space-3:   12px;
+$space-4:   16px;    // = spacer-200
+$space-5:   20px;
+$space-6:   24px;    // = spacer-300
+$space-8:   32px;    // = spacer-400
+$space-10:  40px;    // = spacer-500
+$space-12:  48px;    // = spacer-600
+$space-16:  64px;    // = spacer-700
+$space-20:  80px;    // = spacer-800
+$space-24:  96px;    // = spacer-900
+$space-30: 120px;    // = spacer-1000
+$space-40: 160px;    // desktop spacer-1000
+
+// 3-b. Semantic Aliases (spacer-* compatibility)
+$spacer-100:   $space-2;
+$spacer-200:   $space-4;
+$spacer-300:   $space-6;
+$spacer-400:   $space-8;
+$spacer-500:  $space-10;
+$spacer-600:  $space-12;
+$spacer-700:  $space-16;
+$spacer-800:  $space-20;
+$spacer-900:  $space-24;
+$spacer-1000: $space-30;
+
+// 3-c. Responsive spacer override map (desktop lg+)
+$spacer-responsive: (
+  800:   $space-24,   // 80 → 96px
+  900:   $space-30,   // 96 → 120px
+  1000:  $space-40,   // 120 → 160px
+);
+
+// 3-d. Container / Page padding
+$page-gutter-sm:  1rem;
+$page-gutter-md:  1.5rem;
+$page-gutter-lg:  2rem;
+
+// ─── 4. LAYOUT TOKENS ─────────────────────────────────────────────────────
+
+// 4-a. Breakpoints
+$bp-sm:  480px;
+$bp-md:  768px;
+$bp-lg: 1024px;
+$bp-xl: 1280px;
+$bp-2xl: 1440px;
+
+// 4-b. Max widths
+$max-width:         1280px;
+$max-width-wide:    1440px;
+$max-width-narrow:   720px;
+$max-width-content:  960px;
+
+// 4-c. Border-radius
+$radius-none:  0;
+$radius-sm:    1px;
+$radius-md:    4px;
+$radius-lg:    8px;
+$radius-xl:   12px;
+$radius-full: 9999px;
+
+// ─── 5. Z-INDEX SCALE ─────────────────────────────────────────────────────
+
+$z-base:       0;
+$z-above:      1;
+$z-controls:   2;
+$z-carousel:  10;
+$z-dropdown:  20;
+$z-nav-bg:    90;
+$z-quick-nav: 94;
+$z-header:    95;
+$z-overlay:   99;
+$z-fixed:    100;
+$z-modal:   1000;
+
+// ─── 6. TRANSITION TOKENS ─────────────────────────────────────────────────
+
+// 6-a. Duration
+$dur-fast:    0.2s;
+$dur-normal:  0.3s;
+$dur-medium:  0.4s;
+$dur-slow:    0.5s;
+$dur-slower:  0.6s;
+$dur-slowest: 0.8s;
+$dur-menu:    1.5s;
+
+// 6-b. Easing
+$ease-brand:   cubic-bezier(0.4, 0, 0, 1);
+$ease-smooth:  cubic-bezier(0.62, 0.05, 0.01, 0.99);
+$ease-bounce:  cubic-bezier(0.18, 0.71, 0.11, 1);
+
+// 6-c. Shorthand transitions
+$transition-fast:   $dur-fast ease;
+$transition-brand:  $dur-slow $ease-brand;
+$transition-button: $dur-medium $ease-brand;
+
+// ─── 7. OPACITY TOKENS ────────────────────────────────────────────────────
+
+$opacity-muted:     0.3;
+$opacity-secondary: 0.45;
+$opacity-subtle:    0.55;
+$opacity-medium:    0.6;
+$opacity-soft:      0.7;
+$opacity-high:      0.85;
+
+// ─── 8. SHADOW TOKENS ─────────────────────────────────────────────────────
+
+$shadow-sm:  0 1px 2px rgba(0, 0, 0, 0.05);
+$shadow-md:  0 4px 6px rgba(0, 0, 0, 0.07);
+$shadow-lg:  0 10px 15px rgba(0, 0, 0, 0.10);
+$shadow-xl:  0 20px 25px rgba(0, 0, 0, 0.10);
+
+// ─── 9. COMPONENT-LEVEL SEMANTIC TOKENS ────────────────────────────────────
+
+// Section
+$section-py:    $spacer-800;
+$section-py-lg: map.get($spacer-responsive, 800);
+
+// Card
+$card-gap:      $space-4;
+$card-padding:  $space-6;
+
+// Button
+$btn-font-size:      $fs-md;
+$btn-letter-spacing: 0.135px;
+$btn-bg:             $color-dark;
+$btn-color:          $color-white;
+$btn-hover-bg:       $color-brand-green;
+$btn-hover-color:    $color-dark;
+
+// Header
+$header-height:      56px;
+$header-height-lg:   72px;
+
+// Footer
+$footer-border:      $color-overlay-medium;

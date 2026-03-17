@@ -1,0 +1,204 @@
+@use "../../styles/mixins" as *;
+
+// ═══════════════════════════════════════════════════════════════
+//  NutritionEco — ProductCarousel 포맷 그대로, eco 콘텐츠
+// ═══════════════════════════════════════════════════════════════
+
+.section {
+  background-color: $color-bg-primary;
+  @include section-py(48px, 80px);
+  overflow-x: hidden;
+}
+
+// ── Header ────────────────────────────────────────────────────
+
+.header {
+  @include container;
+  max-width: 1440px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 24px;
+
+  @include lg { margin-bottom: 32px; }
+}
+
+.heading {
+  font-family: $font-display;
+  font-size: 28px;
+  font-style: italic;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  color: $color-dark;
+  line-height: 1;
+
+  @include lg { font-size: 40px; }
+}
+
+// ── Slider Area ────────────────────────────────────────────────
+
+.sliderArea {
+  position: relative;
+}
+
+.slider {
+  overflow: visible !important;
+  padding-left: 1rem;
+
+  @include md { padding-left: 1.5rem; }
+
+  @include lg {
+    padding-left: 2rem;
+    padding-right: 2rem;
+    max-width: 1440px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.slide {
+  user-select: none;
+}
+
+// ── Card ──────────────────────────────────────────────────────
+
+.card {
+  display: block;
+  color: inherit;
+}
+
+// ── Image area ────────────────────────────────────────────────
+
+.imageWrap {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+
+.image {
+  object-fit: cover;
+  object-position: center;
+}
+
+// ── Content ───────────────────────────────────────────────────
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.title {
+  font-family: $font-body;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: $color-dark;
+  line-height: 1.3;
+
+  @include lg { font-size: 15px; }
+}
+
+.copy {
+  font-family: $font-body;
+  font-size: 13px;
+  font-weight: 400;
+  color: $color-text;
+  line-height: 1.6;
+
+  @include lg { font-size: 14px; }
+}
+
+// ── Arrows ────────────────────────────────────────────────────
+
+.arrow {
+  position: absolute;
+  top: calc(50% - 10%);
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background-color: $color-dark;
+  color: $color-white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, background-color 0.2s ease;
+
+  @include lg { width: 80px; height: 80px; }
+
+  &:hover {
+    background-color: $color-brand-green;
+    path { stroke: $color-dark; }
+  }
+}
+
+.arrowVisible { opacity: 1; pointer-events: auto; }
+.arrowLeft    { left: 0; }
+.arrowRight   { right: 0; }
+
+.arrowInner {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.arrowMask {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  svg { transition: transform 0.35s $ease-brand; }
+}
+
+.arrowIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.35s $ease-brand;
+}
+
+.arrowLeft  .arrowMask svg       { transform: translateX(160%); }
+.arrowLeft:hover .arrowMask svg  { transform: translateX(0); }
+.arrowLeft:hover .arrowIcon      { transform: translateX(-160%); }
+.arrowRight .arrowMask svg       { transform: translateX(-160%); }
+.arrowRight:hover .arrowMask svg { transform: translateX(0); }
+.arrowRight:hover .arrowIcon     { transform: translateX(160%); }
+
+// ── Indicator bar ─────────────────────────────────────────────
+
+.indicatorWrap {
+  @include container;
+  max-width: 1440px;
+  margin-top: 24px;
+
+  @include lg { margin-top: 32px; }
+}
+
+.track {
+  position: relative;
+  height: 2px;
+  background-color: rgba($color-dark, 0.12);
+  border-radius: 1px;
+}
+
+.thumb {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  background-color: $color-dark;
+  border-radius: 1px;
+  transition: left 0.35s cubic-bezier(0.4, 0, 0, 1), width 0.35s cubic-bezier(0.4, 0, 0, 1);
+}

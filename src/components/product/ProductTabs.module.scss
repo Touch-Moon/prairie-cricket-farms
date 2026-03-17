@@ -1,0 +1,238 @@
+@use "../../styles/mixins" as *;
+
+.section {
+  background: $color-bg-primary;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.container {
+  @include container;
+  max-width: 1100px;
+}
+
+// ── Accordion ─────────────────────────────────────────────────
+.accordion {
+  display: flex;
+  flex-direction: column;
+}
+
+.item {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $space-6 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  gap: $space-4;
+}
+
+.triggerLabel {
+  font: 500 15px/1 $font-body;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $color-dark;
+}
+
+// CSS Grid trick for smooth height animation
+.body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0, 1);
+}
+
+.itemOpen .body {
+  grid-template-rows: 1fr;
+}
+
+.bodyInner {
+  overflow: hidden;
+}
+
+// Content styles
+.tabContent {
+  padding-bottom: $space-6;
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+
+  p {
+    @include body-text;
+    color: $color-text;
+    margin: 0;
+  }
+
+  ul {
+    margin: 0;
+    padding-left: $space-5;
+    display: flex;
+    flex-direction: column;
+    gap: $space-2;
+
+    li {
+      @include body-text;
+      color: $color-text;
+    }
+  }
+
+  strong {
+    font-weight: 600;
+    color: $color-dark;
+  }
+}
+
+// ── Description 2-column layout ───────────────────────────────
+.descGrid {
+  display: flex;
+  flex-direction: column;
+  gap: $space-10;
+  padding-bottom: $space-10;
+
+  @include lg {
+    flex-direction: row;
+    gap: 0;
+  }
+}
+
+.descCol {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+
+  @include lg {
+    padding: 0 $space-10;
+
+    &:first-child {
+      padding-left: 0;
+    }
+
+    &:last-child {
+      padding-right: 0;
+    }
+  }
+}
+
+.descVertDivider {
+  display: none;
+
+  @include lg {
+    display: block;
+    width: 1px;
+    background: rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+    align-self: stretch;
+  }
+}
+
+.descHeading {
+  font: 700 20px/1.2 $font-body;
+  color: $color-brand-green-dark;
+  margin: 0;
+}
+
+.descSubheading {
+  font: 700 14px/1.4 $font-body;
+  color: $color-dark;
+  margin: 0;
+}
+
+.descBody {
+  font: 400 14px/1.6 $font-body;
+  color: $color-text;
+  margin: 0;
+}
+
+.descList {
+  margin: 0;
+  padding-left: $space-5;
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+
+  li {
+    font: 400 14px/1.6 $font-body;
+    color: $color-text;
+  }
+
+  ul {
+    margin-top: $space-1;
+    padding-left: $space-4;
+    list-style-type: circle;
+  }
+}
+
+.descDivider {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  color: rgba(0, 0, 0, 0.25);
+  margin: $space-2 0;
+}
+
+.descDividerLine {
+  flex: 1;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.12);
+}
+
+.descCallout {
+  font: 700 14px/1.5 $font-body;
+  color: $color-dark;
+  margin: 0;
+}
+
+.descCtaLabel {
+  font: 400 13px/1 $font-body;
+  color: $color-text;
+  margin: 0;
+}
+
+.descCtaBtn {
+  display: inline-block;
+  padding: 14px 32px;
+  background: $color-dark;
+  color: #fff;
+  font: 500 12px/1 $font-body;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 2px;
+  transition: background $transition-button;
+  align-self: flex-start;
+
+  &:hover {
+    background: $color-brand-green;
+  }
+}
+
+.allergyNote {
+  padding: $space-4;
+  background: #fff8e6;
+  border-left: 3px solid $color-copper;
+  border-radius: 2px;
+  font-size: 13px !important;
+  color: $color-copper-dark !important;
+}
+
+// Chevron +/– icon
+.chevron {
+  flex-shrink: 0;
+  color: $color-dark;
+  transition: transform $transition-fast;
+}
+
+.chevronV {
+  transition: transform 0.3s ease;
+  transform-origin: center;
+}
+
+.chevronOpen .chevronV {
+  transform: rotate(90deg);
+}

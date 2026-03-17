@@ -1,0 +1,182 @@
+@use "../../styles/mixins" as *;
+
+.stickyCartBar {
+  position: fixed;
+  bottom: 16px;
+  inset-inline-start: 50%;
+  z-index: $z-fixed;
+  width: calc(100% - 32px); // 16px each side
+  max-width: 880px;
+  background: $color-bg-primary;
+  border: 1px solid rgba($color-dark, 0.1);
+  transform: translateX(-50%) translateY(calc(100% + 16px));
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0, 1);
+  will-change: transform;
+}
+
+.stickyCartBarVisible {
+  transform: translateX(-50%) translateY(0);
+}
+
+// ── Inner layout ──────────────────────────────────────────────
+.stickyBarContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-4;
+  padding: 16px;
+}
+
+// ── Left: info ────────────────────────────────────────────────
+.stickyProductInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.stickyProductThumb {
+  position: relative;
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: $color-brand-green-light;
+
+  @include md {
+    width: 56px;
+    height: 56px;
+  }
+}
+
+.stickyProductThumbImage {
+  object-fit: cover;
+  object-position: center;
+}
+
+.stickyProductMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.name {
+  font-family: $font-body;
+  font-size: 14px;
+  font-weight: 600;
+  color: $color-dark;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  @include md {
+    font-size: 15px;
+  }
+}
+
+.variant {
+  font-family: $font-body;
+  font-size: 12px;
+  font-weight: 400;
+  color: $color-text;
+  white-space: nowrap;
+
+  @include md {
+    font-size: 13px;
+  }
+}
+
+// ── Right: actions wrapper ────────────────────────────────────
+.actions {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  flex-shrink: 0;
+}
+
+// ── Cart icon button ──────────────────────────────────────────
+.cartIconBtn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid rgba($color-dark, 0.2);
+  background: transparent;
+  color: $color-dark;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: background $transition-fast, border-color $transition-fast;
+  flex-shrink: 0;
+
+  &:hover {
+    background: $color-bg-primary;
+    border-color: $color-dark;
+  }
+
+  @include md {
+    width: 52px;
+    height: 52px;
+  }
+}
+
+.cartBadge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  background: $color-brand-green-light;
+  color: $color-dark;
+  font-family: $font-body;
+  font-size: 10px;
+  font-weight: 700;
+  border-radius: 8px;
+  line-height: 1;
+}
+
+// CTA button
+.cta {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  padding-inline: $space-6;
+  background: $color-dark;
+  color: #fff;
+  font-family: $font-body;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background $transition-button,
+    color $transition-button;
+
+  &:hover {
+    background: $color-brand-green;
+    color: $color-dark;
+  }
+
+  @include md {
+    height: 52px;
+    padding-inline: $space-8;
+    font-size: 13px;
+  }
+}
+
+.ctaAdded {
+  background: $color-brand-green;
+  color: $color-dark;
+}

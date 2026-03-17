@@ -1,0 +1,610 @@
+@use "../../styles/mixins" as *;
+
+// Text slide rolling animation
+$slide-lh: 16px;
+
+.mask {
+  height: $slide-lh;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.slide {
+  display: block;
+  line-height: $slide-lh;
+  transition: transform 0.4s $ease-brand;
+
+  &::after {
+    content: attr(data-content);
+    display: block;
+    line-height: $slide-lh;
+  }
+}
+
+.saveBtn:not(:disabled):hover .slide,
+.shopLink:hover .slide,
+.subBtnOutline:not(:disabled):hover .slide,
+.subBtnDanger:not(:disabled):hover .slide {
+  transform: translateY(-50%);
+}
+
+// wishAtc is nested inside .wishCard
+.wishCard .wishAtc:hover .slide {
+  transform: translateY(-50%);
+}
+
+// Common layout
+.accountWrapper {
+  @include container;
+  // alert(36) + header+gap mobile(64) + quickNav(40) + buffer(24)
+  padding-block-start: calc(36px + 64px + 40px + #{$space-6});
+  padding-block-end: $space-20;
+  min-height: 80dvh;
+
+  @include lg {
+    // alert(36) + header+gap desktop(96) + buffer(32)
+    padding-block-start: calc(36px + 96px + #{$space-8});
+  }
+}
+
+.accountLayout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $space-8;
+
+  @include lg {
+    grid-template-columns: 220px 1fr;
+    gap: $space-12;
+  }
+}
+
+// Sidebar
+.accountSidebar {
+  @include lg {
+    position: sticky;
+    inset-block-start: 100px;
+    align-self: start;
+  }
+}
+
+.sidebarName {
+  font-family: $font-display;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: $color-dark;
+  margin-bottom: $space-1;
+}
+
+.sidebarEmail {
+  font-size: 12px;
+  color: rgba($color-dark, 0.45);
+  margin-bottom: $space-6;
+}
+
+.nav {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: $space-1;
+
+  @include lg {
+    flex-direction: column;
+  }
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-2 $space-3;
+  border-radius: 3px;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba($color-dark, 0.55);
+  text-decoration: none;
+  transition: color $transition-fast, background $transition-fast;
+
+  &:hover {
+    color: $color-dark;
+    background: rgba($color-dark, 0.04);
+  }
+
+  &.active {
+    color: $color-dark;
+    background: rgba($color-dark, 0.06);
+    font-weight: 600;
+  }
+
+  svg { flex-shrink: 0; }
+}
+
+.signOutBtn {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  margin-top: $space-4;
+  padding: $space-2 $space-3;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba($color-dark, 0.4);
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: color $transition-fast;
+
+  &:hover { color: #dc2626; }
+}
+
+// Main content common
+.main {}
+
+.pageHeader {
+  margin-bottom: $space-8;
+  padding-bottom: $space-6;
+  border-bottom: 1px solid rgba($color-dark, 0.1);
+
+  h1 {
+    @include heading-display;
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    margin-bottom: $space-1;
+  }
+
+  p {
+    @include body-text;
+    color: rgba($color-dark, 0.5);
+  }
+}
+
+// Overview card grid
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $space-4;
+  margin-block-end: $space-10;
+
+  @include md {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.statCard {
+  padding: $space-5 $space-5;
+  border: 1px solid rgba($color-dark, 0.1);
+  border-radius: 4px;
+  background: #fff;
+
+  .statLabel {
+    @include eyebrow;
+    font-size: 10px;
+    color: rgba($color-dark, 0.45);
+    margin-bottom: $space-2;
+  }
+
+  .statValue {
+    font-family: $font-display;
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: $color-dark;
+  }
+}
+
+// Section block
+.accountSection {
+  margin-block-end: $space-10;
+
+  h2 {
+    @include heading-section;
+    font-size: 12px;
+    margin-block-end: $space-5;
+  }
+}
+
+// Order list
+.orderList {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.orderCard {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: $space-4;
+  padding: $space-4 $space-5;
+  border: 1px solid rgba($color-dark, 0.1);
+  border-radius: 4px;
+  background: #fff;
+  transition: border-color $transition-fast;
+
+  &:hover { border-color: rgba($color-dark, 0.3); }
+
+  .orderInfo {
+    .orderId {
+      font-size: 13px;
+      font-weight: 600;
+      color: $color-dark;
+      margin-bottom: $space-1;
+    }
+    .orderMeta {
+      font-size: 12px;
+      color: rgba($color-dark, 0.45);
+    }
+  }
+
+  .orderRight {
+    text-align: right;
+
+    .orderTotal {
+      font-size: 14px;
+      font-weight: 600;
+      color: $color-dark;
+      margin-bottom: $space-1;
+    }
+  }
+}
+
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+
+  &.delivered {
+    background: $color-brand-green-light;
+    color: $color-brand-green-dark;
+  }
+  &.processing {
+    background: #fef9c3;
+    color: #854d0e;
+  }
+  &.cancelled {
+    background: #fee2e2;
+    color: #991b1b;
+  }
+}
+
+// Profile form
+.profileForm {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $space-4;
+  max-width: 560px;
+
+  @include md {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+
+  &.fullWidth { grid-column: 1 / -1; }
+
+  label {
+    @include eyebrow;
+    font-size: 11px;
+    color: $color-text;
+  }
+
+  input, select {
+    width: 100%;
+    height: 48px;
+    padding: 0 $space-4;
+    border: 1px solid rgba($color-dark, 0.2);
+    border-radius: 2px;
+    font-family: $font-body;
+    font-size: 14px;
+    color: $color-dark;
+    background: #fff;
+    transition: border-color $transition-fast;
+    outline: none;
+
+    &:focus { border-color: $color-dark; }
+    &:disabled {
+      background: $color-bg-primary;
+      color: rgba($color-dark, 0.45);
+      cursor: not-allowed;
+    }
+  }
+}
+
+.saveBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  padding: 0 $space-8;
+  margin-top: $space-2;
+  overflow: hidden;
+  background: transparent;
+  color: $color-dark;
+  border: 1.5px solid $color-dark;
+  border-radius: 0;
+  font-family: $font-body;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color $transition-button, color $transition-button;
+
+  &:hover {
+    background-color: $color-dark;
+    color: #fff;
+  }
+}
+
+.successMsg {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-3 $space-4;
+  background: $color-brand-green-light;
+  border: 1px solid rgba($color-brand-green, 0.25);
+  border-radius: 3px;
+  font-size: 13px;
+  color: $color-brand-green-dark;
+  grid-column: 1 / -1;
+}
+
+// Subscription card
+.subCard {
+  padding: $space-6;
+  border: 1px solid rgba($color-dark, 0.12);
+  border-radius: 6px;
+  background: #fff;
+  margin-block-end: $space-4;
+
+  .subHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: $space-4;
+    margin-block-end: $space-4;
+    flex-wrap: wrap;
+  }
+
+  .subProduct {
+    font-size: 15px;
+    font-weight: 600;
+    color: $color-dark;
+    margin-block-end: 4px;
+  }
+
+  .subMeta {
+    font-size: 12px;
+    color: rgba($color-dark, 0.45);
+  }
+
+  .subActions {
+    display: flex;
+    gap: $space-2;
+    flex-wrap: wrap;
+    margin-block-start: $space-4;
+    padding-block-start: $space-4;
+    border-top: 1px solid rgba($color-dark, 0.08);
+  }
+}
+
+.subBtnOutline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  padding: 0 $space-4;
+  overflow: hidden;
+  background: transparent;
+  color: $color-dark;
+  border: 1.5px solid $color-dark;
+  border-radius: 0;
+  font-family: $font-body;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background $transition-button, border-color $transition-button, color $transition-button;
+
+  &:hover {
+    background: $color-dark;
+    color: #fff;
+    border-color: $color-dark;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+}
+
+.subBtnDanger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  padding: 0 $space-4;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 1.5px solid #fca5a5;
+  border-radius: 0;
+  overflow: hidden; // required for mask/slide rolling animation
+  color: #dc2626;
+  background: none;
+  cursor: pointer;
+  transition: background $transition-button, color $transition-button, border-color $transition-button;
+
+  &:hover {
+    background: #fee2e2;
+    border-color: #f87171;
+  }
+}
+
+.nextShipment {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-3 $space-4;
+  background: $color-bg-primary;
+  border-radius: 3px;
+  font-size: 13px;
+  color: $color-text;
+  margin-bottom: $space-4;
+
+  strong { color: $color-dark; }
+}
+
+// Wishlist grid
+.wishlistGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $space-4;
+
+  @include md {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @include lg {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.wishCard {
+  position: relative;
+  border: 1px solid rgba($color-dark, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  background: #fff;
+  transition: border-color $transition-fast;
+
+  &:hover { border-color: rgba($color-dark, 0.3); }
+
+  .wishImg {
+    aspect-ratio: 4/5;
+    background: $color-bg-primary;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .wishInfo {
+    padding: $space-3 $space-3;
+
+    .wishName {
+      font-size: 13px;
+      font-weight: 600;
+      color: $color-dark;
+      margin-bottom: 4px;
+    }
+
+    .wishPrice {
+      font-size: 13px;
+      color: rgba($color-dark, 0.5);
+    }
+  }
+
+  .wishRemove {
+    position: absolute;
+    inset-block-start: $space-2;
+    inset-inline-end: $space-2;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border: 1px solid rgba($color-dark, 0.15);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background $transition-fast;
+
+    &:hover { background: #fee2e2; }
+  }
+
+  .wishAtc {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 40px;
+    overflow: hidden;
+    background: transparent;
+    color: $color-dark;
+    border: 1.5px solid $color-dark;
+    border-radius: 0;
+    font-family: $font-body;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color $transition-button, color $transition-button;
+
+    &:hover {
+      background-color: $color-dark;
+      color: #fff;
+    }
+  }
+}
+
+.emptyWishlistState {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: $space-16 $space-4;
+
+  .emptyIcon {
+    font-size: 3rem;
+    margin-bottom: $space-4;
+    opacity: 0.3;
+  }
+
+  h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: $color-dark;
+    margin-bottom: $space-2;
+  }
+
+  p {
+    font-size: 14px;
+    color: rgba($color-dark, 0.45);
+    margin-bottom: $space-6;
+  }
+}
+
+.shopLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  padding: 0 $space-8;
+  overflow: hidden;
+  background: transparent;
+  color: $color-dark;
+  border: 1.5px solid $color-dark;
+  border-radius: 0;
+  font-family: $font-body;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color $transition-button, color $transition-button;
+
+  &:hover {
+    background-color: $color-dark;
+    color: #fff;
+  }
+}

@@ -1,0 +1,38 @@
+@use "../../styles/mixins" as *;
+
+// ═══════════════════════════════════════════════════════════════
+//  AboutImage — Full-width landscape image below AboutHero
+// ═══════════════════════════════════════════════════════════════
+
+.section {
+  background-color: $color-bg-primary;
+  max-width: $max-width-wide;
+  margin: 0 auto;
+  padding-left: $page-gutter-sm;
+  padding-right: $page-gutter-sm;
+
+  @include md {
+    padding-left: $page-gutter-md;
+    padding-right: $page-gutter-md;
+  }
+
+  @include lg {
+    padding-left: $page-gutter-lg;
+    padding-right: $page-gutter-lg;
+  }
+}
+
+.imageWrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+
+  @include lg {
+    aspect-ratio: 2400 / 1351;
+  }
+}
+
+.image {
+  object-fit: cover;
+  object-position: 50% 50%;
+}

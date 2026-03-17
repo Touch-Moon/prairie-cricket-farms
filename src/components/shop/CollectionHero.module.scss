@@ -1,0 +1,125 @@
+@use "../../styles/mixins" as *;
+
+// ═══════════════════════════════════════════════════════════════
+//  CollectionHero — Shop collection page hero
+//  Eyebrow + italic display heading + optional description
+//  Centered layout on cream background
+// ═══════════════════════════════════════════════════════════════
+
+.section {
+  background-color: $color-bg-primary;
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: $space-5;
+
+  max-width: $max-width-wide;
+  margin: 0 auto;
+  padding-left: $page-gutter-sm;
+  padding-right: $page-gutter-sm;
+  // Account for fixed header (announcement bar + nav + quick nav)
+  padding-top: calc(#{$header-height} + 40px + #{$spacer-700});
+  padding-bottom: $spacer-700;
+
+  @include md {
+    padding-left: $page-gutter-md;
+    padding-right: $page-gutter-md;
+    gap: $space-6;
+  }
+
+  @include lg {
+    padding-left: $page-gutter-lg;
+    padding-right: $page-gutter-lg;
+    padding-top: calc(#{$header-height-lg} + #{$spacer-900});
+    padding-bottom: $spacer-800;
+  }
+}
+
+// ── Entry animation ────────────────────────────────────────────
+
+.eyebrow,
+.heading,
+.description {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.6s $ease-brand, transform 0.6s $ease-brand;
+}
+
+.heading {
+  transition-delay: 0.1s;
+}
+
+.description {
+  transition-delay: 0.2s;
+}
+
+.section.visible {
+  .eyebrow {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .heading {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .description {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ── Eyebrow ───────────────────────────────────────────────────
+// Original: 13px, 500, uppercase, letter-spacing -0.07px
+
+.eyebrow {
+  font-family: $font-body;
+  font-weight: $fw-medium;
+  font-size: $fs-md;
+  line-height: $lh-none;
+  letter-spacing: -0.07px;
+  text-transform: uppercase;
+  color: $color-dark;
+}
+
+// ── Heading ───────────────────────────────────────────────────
+// Original: 64px desktop, 500, italic, uppercase, line-height 96%
+
+.heading {
+  font-family: $font-display;
+  font-style: italic;
+  font-weight: $fw-medium;
+  color: $color-dark;
+  line-height: $lh-display;
+  letter-spacing: $ls-tighter;
+  text-transform: uppercase;
+  max-width: 900px;
+
+  font-size: $fs-10xl;
+
+  @include md {
+    font-size: $fs-12xl;
+  }
+
+  @include lg {
+    font-size: $fs-15xl;
+    letter-spacing: $ls-tightest;
+  }
+}
+
+// ── Description ───────────────────────────────────────────────
+// Original: 16px, 400, line-height 1.35, margin-top 16px, color #14171a
+
+.description {
+  font-family: $font-body;
+  font-weight: $fw-regular;
+  font-size: $fs-2xl;
+  line-height: $lh-relaxed;
+  color: $color-dark;
+  max-width: 640px;
+}

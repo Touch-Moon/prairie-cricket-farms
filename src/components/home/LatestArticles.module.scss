@@ -1,0 +1,190 @@
+@use "../../styles/mixins" as *;
+
+// ═══════════════════════════════════════════════════════════════
+//  LatestArticles — "Latest Tips & Advice" blog list
+// ═══════════════════════════════════════════════════════════════
+
+.articlesSection {
+  background-color: $color-bg-primary;
+  @include section-spacing;
+  // CommunityBanner sticky reveal: 이 섹션이 위를 덮고 지나감
+  position: relative;
+  z-index: 1;
+}
+
+.articlesContainer {
+  @include container;
+  max-width: 1440px;
+}
+
+// ── Header ──────────────────────────────────────────────────
+
+.articlesHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 40px;
+
+  @include lg {
+    margin-bottom: 56px;
+  }
+}
+
+.articlesHeading {
+  font-family: $font-display;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 1.1;
+  color: $color-dark;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+
+  @include md {
+    font-size: 48px;
+  }
+
+  @include lg {
+    font-size: 60px;
+  }
+}
+
+.readMore {
+  font-family: $font-body;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $color-dark;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  white-space: nowrap;
+  transition: opacity 0.2s ease;
+  flex-shrink: 0;
+
+  &:hover {
+    opacity: 0.55;
+  }
+}
+
+// ── Article list ────────────────────────────────────────────
+
+.articlesList {
+  display: flex;
+  flex-direction: column;
+}
+
+// ── Article row ─────────────────────────────────────────────
+
+.articleRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 28px 0;
+  border-top: 1px solid rgba($color-dark, 0.12);
+  text-decoration: none;
+  color: inherit;
+
+  // scroll reveal — 초기 상태
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s $ease-brand, transform 0.7s $ease-brand;
+
+  @include lg {
+    padding: 36px 0;
+    gap: 48px;
+  }
+
+  &:last-child {
+    border-bottom: 1px solid rgba($color-dark, 0.12);
+  }
+
+  &:hover {
+    .articleImage {
+      transform: scale(1.05);
+    }
+  }
+}
+
+.articleRowVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+// ── Text ────────────────────────────────────────────────────
+
+.articleText {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+
+  @include lg {
+    gap: 10px;
+  }
+}
+
+.tags {
+  display: flex;
+  gap: 8px;
+}
+
+.tag {
+  font-family: $font-body;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $color-dark;
+}
+
+.articleTitle {
+  font-family: $font-display;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 1.25;
+  color: $color-dark;
+  letter-spacing: -0.01em;
+
+  @include md {
+    font-size: 28px;
+  }
+
+  @include lg {
+    font-size: 34px;
+  }
+}
+
+.date {
+  font-family: $font-body;
+  font-size: 13px;
+  font-weight: 400;
+  color: $color-text;
+  opacity: 0.6;
+}
+
+// ── Thumbnail ───────────────────────────────────────────────
+
+.articleImageWrap {
+  position: relative;
+  flex-shrink: 0;
+  width: 100px;
+  aspect-ratio: 1;
+  overflow: hidden;
+
+  @include md {
+    width: 160px;
+  }
+
+  @include lg {
+    width: 200px;
+  }
+}
+
+.articleImage {
+  object-fit: cover;
+  transition: transform 0.5s $ease-brand;
+}

@@ -1,0 +1,217 @@
+// ═══════════════════════════════════════════════════════════════════════════
+//  globals.scss — base reset & utility styles
+//  absolutecollagen.com design system
+// ═══════════════════════════════════════════════════════════════════════════
+
+@use '../styles/mixins' as *;
+
+// ── Accessibility ────────────────────────────────────────────────────────────
+
+.skip-nav {
+  position: absolute;
+  top: -100%;
+  left: $page-gutter-sm;
+  z-index: $z-modal;
+  padding: 0.75rem 1.5rem;
+  background: $color-dark;
+  color: $color-white;
+  font-family: $font-body;
+  font-weight: $fw-semibold;
+  font-size: 0.875rem;
+  border-radius: $radius-md;
+  text-decoration: none;
+  transition: top $dur-fast ease;
+
+  &:focus {
+    top: 0;
+  }
+}
+
+.sr-only {
+  @include sr-only;
+}
+
+:focus-visible {
+  outline: 2px solid $color-brand-green;
+  outline-offset: 3px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+// ── prefers-reduced-motion (SCSS level) ────────────────────────────────────────
+// GSAP level handled in LenisProvider.tsx / HeroBanner.tsx
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+// ── Base Reset ────────────────────────────────────────────────────────────────
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  overflow-x: clip; // clip instead of hidden - preserves sticky positioning
+}
+
+:root {
+  // ── Color tokens ────────────────────────────────────────────────────────────
+  --color-brand-green: #{$color-brand-green};
+  --color-brand-green-light: #{$color-brand-green-light};
+  --color-brand-green-dark: #{$color-brand-green-dark};
+  // Legacy alias for backwards compatibility
+  --color-brand-yellow: var(--color-brand-green);
+  --color-brand-yellow-light: var(--color-brand-green-light);
+  --color-dark: #{$color-dark};
+  --color-text: #{$color-text};
+  --color-bg: #{$color-bg-primary};
+  --color-white: #{$color-white};
+  --color-black: #{$color-black};
+  --color-copper: #{$color-copper};
+  --color-copper-dark: #{$color-copper-dark};
+  --color-copper-light: #{$color-copper-light};
+  --color-border: #{$color-border};
+  --color-disabled: #{$color-disabled};
+
+  // ── Spacer tokens ──────────────────────────────────────────────────────────
+  --spacer-100:  #{$spacer-100};
+  --spacer-200:  #{$spacer-200};
+  --spacer-300:  #{$spacer-300};
+  --spacer-400:  #{$spacer-400};
+  --spacer-500:  #{$spacer-500};
+  --spacer-600:  #{$spacer-600};
+  --spacer-700:  #{$spacer-700};
+  --spacer-800:  #{$spacer-800};
+  --spacer-900:  #{$spacer-900};
+  --spacer-1000: #{$spacer-1000};
+
+  // ── Section spacing ────────────────────────────────────────────────────────
+  --section-spacing-top:    var(--spacer-800);
+  --section-spacing-bottom: var(--spacer-800);
+
+  // ── Font-size tokens (CSS vars for JS/inline usage) ─────────────────────────
+  --fs-2xs:  #{$fs-2xs};
+  --fs-xs:   #{$fs-xs};
+  --fs-sm:   #{$fs-sm};
+  --fs-base: #{$fs-base};
+  --fs-md:   #{$fs-md};
+  --fs-lg:   #{$fs-lg};
+  --fs-xl:   #{$fs-xl};
+  --fs-2xl:  #{$fs-2xl};
+  --fs-3xl:  #{$fs-3xl};
+
+  // ── Transition tokens ──────────────────────────────────────────────────────
+  --dur-fast:   #{$dur-fast};
+  --dur-normal: #{$dur-normal};
+  --dur-medium: #{$dur-medium};
+  --dur-slow:   #{$dur-slow};
+  --ease-brand: #{$ease-brand};
+
+  // ── Radius tokens ──────────────────────────────────────────────────────────
+  --radius-sm:   #{$radius-sm};
+  --radius-md:   #{$radius-md};
+  --radius-lg:   #{$radius-lg};
+  --radius-full: #{$radius-full};
+
+  // ── Desktop responsive overrides ───────────────────────────────────────────
+  @media (min-width: #{$bp-lg}) {
+    --spacer-800:  96px;
+    --spacer-900:  120px;
+    --spacer-1000: 160px;
+  }
+}
+
+body {
+  --font-display: var(--font-playfair), 'Georgia', serif;
+  --font-body: var(--font-inter), 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+
+  font-family: var(--font-body);
+  font-size: $fs-2xl;
+  line-height: $lh-body;
+  color: $color-text;
+  --color-bg: #{$color-bg-primary};
+  background-color: $color-bg-primary;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  overflow-x: clip; // clip instead of hidden - preserves sticky positioning
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-body);
+  color: $color-dark;
+  line-height: $lh-snug;
+  font-weight: $fw-medium;
+  letter-spacing: $ls-tighter;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+p { margin: 0; }
+a { color: inherit; }
+button { font-family: inherit; cursor: pointer; }
+img, video { max-width: 100%; display: block; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+
+// ── Utility ───────────────────────────────────────────────────────────────────
+
+.main-content {
+  min-height: 100vh;
+  min-height: 100svh; // iOS Safari: excludes address bar
+}
+
+.container { @include container; }
+
+// ── Cart open - page content blur ─────────────────────────────────────────────
+// apply filter: blur only - do not touch transform to maintain header translateY hide/show
+html.cart-open {
+  header,
+  .main-content,
+  footer {
+    filter: blur(25px);
+    transition: filter 0.35s ease;
+    pointer-events: none;
+    user-select: none;
+  }
+}
+
+// Account drawer open - same pattern as cart-open
+html.account-open {
+  header,
+  .main-content,
+  footer {
+    filter: blur(25px);
+    transition: filter 0.35s ease;
+    pointer-events: none;
+    user-select: none;
+  }
+}
+
+// Mega menu open - exclude header (menu is inside header), blur main/footer only
+html.megamenu-open {
+  .main-content,
+  footer {
+    filter: blur(25px);
+    transition: filter 0.4s ease;
+    pointer-events: none;
+    user-select: none;
+  }
+}
+
+// Parallax Reveal - CommunityBanner sticky pattern
+.sticky-reveal {
+  position: sticky;
+  inset-block-end: 0;
+  z-index: $z-base;
+}
+
+.after-reveal {
+  position: relative;
+  z-index: $z-above;
+}

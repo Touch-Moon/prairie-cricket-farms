@@ -1,0 +1,148 @@
+@use "../../styles/mixins" as *;
+
+// ═══════════════════════════════════════════════════════════════
+//  CategoryGrid — 3-column product category section
+// ═══════════════════════════════════════════════════════════════
+
+.categoryGridSection {
+  background-color: $color-bg-primary;
+}
+
+.categoryGridInner {
+  display: grid;
+  grid-template-columns: 1fr;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: 1rem;
+
+  @include section-spacing-bottom;
+
+  @include md {
+    padding-inline: 1.5rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  @include lg {
+    padding-inline: 2rem;
+  }
+}
+
+// Category card
+
+.categoryCard {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  // Mobile: divider between cards
+  & + & {
+    padding-block-start: 40px;
+    @include md { padding-block-start: 0; }
+  }
+}
+
+// ── Image ─────────────────────────────────────────────────────
+
+.categoryImageWrap {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+}
+
+.categoryImage {
+  object-fit: cover;
+  transition: transform 0.6s $ease-brand;
+
+  .categoryImageWrap:hover & {
+    transform: scale(1.04);
+  }
+}
+
+// ── Body ──────────────────────────────────────────────────────
+
+.categoryCardBody {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 318px;
+}
+
+.categoryCardHeading {
+  font-family: $font-body;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: $color-dark;
+
+  @include lg {
+    font-size: 18px;
+  }
+}
+
+.categoryCardCopy {
+  font-family: $font-body;
+  font-size: 14px;
+  font-weight: 400;
+  color: $color-text;
+  line-height: 1.65;
+
+  @include lg {
+    font-size: 15px;
+  }
+}
+
+// Button — underline wipe animation
+// ::before = always visible dark underline (width 100%)
+// ::after  = white mask, on hover translateX(-101%) → translateX(101%) sweep
+
+.categoryCardBtn {
+  display: inline-block;
+  position: relative;
+  align-self: flex-start;
+  overflow: hidden;
+
+  background: none;
+  border: none;
+  padding-block-end: 3px;
+  text-decoration: none;
+
+  font-family: $font-body;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $color-dark;
+  line-height: 120%;
+
+  // Always visible underline
+  &::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    inset-inline-start: 0;
+    width: 100%;
+    height: 1px;
+    background-color: $color-dark;
+  }
+
+  // Background mask — on hover left → right sweep (2x width)
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    inset-inline-start: 0;
+    width: 200%;
+    height: 1px;
+    background-color: $color-bg-primary;
+    transform: translateX(-101%);
+    transition: transform 0.8s cubic-bezier(0.62, 0.05, 0.01, 0.99);
+  }
+
+  &:hover::after {
+    transform: translateX(51%);
+  }
+}

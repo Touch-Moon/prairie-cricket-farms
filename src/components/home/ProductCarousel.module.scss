@@ -1,0 +1,357 @@
+@use "../../styles/mixins" as *;
+
+// ═══════════════════════════════════════════════════════════════
+//  ProductCarousel — Bestsellers
+// ═══════════════════════════════════════════════════════════════
+
+.carouselSection {
+  background-color: $color-bg-primary;
+  @include section-py(48px, 80px);
+  // Horizontal scroll blocking
+  overflow-x: hidden;
+}
+
+// ── Header ────────────────────────────────────────────────────
+
+.carouselHeader {
+  @include container;
+  max-width: 1440px; // Align with slider baseline
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 24px;
+
+  @include lg {
+    margin-bottom: 32px;
+  }
+}
+
+.carouselHeading {
+  font-family: $font-display;
+  font-size: 28px;
+  font-style: italic;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  color: $color-dark;
+  line-height: 1;
+
+  @include lg {
+    font-size: 40px;
+  }
+}
+
+.viewAll {
+  font-family: $font-body;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $color-dark;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: opacity 0.2s ease;
+  white-space: nowrap;
+
+  &:hover {
+    opacity: 0.55;
+  }
+}
+
+// ── Slider Area (full-bleed wrapper) ──────────────────────────
+
+.sliderArea {
+  position: relative;
+  // Overflow handled by .section overflow-x:hidden
+}
+
+// ── keen-slider ────────────────────────────────────────────────
+
+.slider {
+  overflow: visible !important; // keen-slider default overflow:hidden override
+  padding-inline-start: 1rem;
+
+  @include md {
+    padding-inline-start: 1.5rem;
+  }
+
+  @include lg {
+    padding-inline: 2rem;
+    max-width: 1440px;
+    margin-inline: auto;
+  }
+}
+
+.slide {
+  user-select: none;
+}
+
+// ── Card ──────────────────────────────────────────────────────
+
+.carouselCard {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+
+  &:hover .carouselImageDefault {
+    opacity: 0;
+  }
+
+  &:hover .carouselImageHover {
+    opacity: 1;
+  }
+
+  &:hover .carouselImage {
+    transform: scale(1.05);
+  }
+}
+
+// ── Image ──────────────────────────────────────────────────────
+
+.carouselImageWrap {
+  position: relative;
+  aspect-ratio: 4 / 5; // 448×560 원본 비율
+  background-color: $color-white;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+
+.carouselImageLayer {
+  position: absolute;
+  inset: 0;
+  transition: opacity 0.4s $ease-brand;
+}
+
+.carouselImageDefault {
+  opacity: 1;
+}
+
+.carouselImageHover {
+  opacity: 0;
+}
+
+.carouselImage {
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.6s $ease-brand;
+}
+
+// ── Badge ──────────────────────────────────────────────────────
+
+.carouselBadge {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background-color: $color-brand-yellow;
+  color: $color-dark;
+  font-family: $font-body;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  padding: 4px 7px;
+  line-height: 1;
+  pointer-events: none;
+
+  @include lg {
+    font-size: 10px;
+  }
+}
+
+// ── Card Content ───────────────────────────────────────────────
+
+.carouselCardContent {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.carouselCardTitle {
+  font-family: $font-body;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: $color-dark;
+  line-height: 1.3;
+
+  @include lg {
+    font-size: 15px;
+  }
+}
+
+.price {
+  font-family: $font-body;
+  font-size: 13px;
+  font-weight: 400;
+  color: $color-text;
+  line-height: 1;
+
+  @include lg {
+    font-size: 14px;
+  }
+}
+
+.was {
+  opacity: 0.45;
+  margin-right: 1px;
+}
+
+// ── Reviews ────────────────────────────────────────────────────
+
+.reviews {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.stars {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  color: $color-dark;
+}
+
+.count {
+  font-family: $font-body;
+  font-size: 11px;
+  color: $color-text;
+  opacity: 0.6;
+  line-height: 1;
+}
+
+// ── Arrows ─────────────────────────────────────────────────────
+
+.arrow {
+  position: absolute;
+  top: calc(50% - 10%);
+  transform: translateY(-50%);
+  z-index: 10;
+
+  width: 40px;
+  height: 40px;
+  border: none;
+  background-color: $color-dark;
+  color: $color-white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, background-color 0.2s ease;
+
+  @include lg {
+    width: 80px;
+    height: 80px;
+  }
+
+  &:hover {
+    background-color: $color-brand-yellow;
+
+    path {
+      stroke: $color-dark;
+    }
+  }
+}
+
+.arrowVisible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.arrowLeft {
+  left: 0;
+}
+
+.arrowRight {
+  right: 0;
+}
+
+// Icon wrapper — arrowMask + arrowIcon clip container
+
+.arrowInner {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  overflow: hidden; // ghost icon clip
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Mask (ghost icon)
+
+.arrowMask {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+
+  svg {
+    transition: transform 0.35s $ease-brand;
+  }
+}
+
+// Main icon
+.arrowIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.35s $ease-brand;
+}
+
+// Left arrow — ghost: right to left
+.arrowLeft .arrowMask svg {
+  transform: translateX(160%);
+}
+.arrowLeft:hover .arrowMask svg {
+  transform: translateX(0);
+}
+.arrowLeft:hover .arrowIcon {
+  transform: translateX(-160%);
+}
+
+// Right arrow — ghost: left to right
+.arrowRight .arrowMask svg {
+  transform: translateX(-160%);
+}
+.arrowRight:hover .arrowMask svg {
+  transform: translateX(0);
+}
+.arrowRight:hover .arrowIcon {
+  transform: translateX(160%);
+}
+
+// ── Indicator bar ──────────────────────────────────────────────
+
+.indicatorWrap {
+  @include container;
+  max-width: 1440px; // 슬라이더 기준선과 맞춤
+  margin-top: 24px;
+
+  @include lg {
+    margin-top: 32px;
+  }
+}
+
+.track {
+  position: relative;
+  height: 2px;
+  background-color: rgba($color-dark, 0.12);
+  border-radius: 1px;
+}
+
+.thumb {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  background-color: $color-dark;
+  border-radius: 1px;
+  // 동적 width + left 은 JS로 주입 (inline style)
+  transition: left 0.35s cubic-bezier(0.4, 0, 0, 1),
+    width 0.35s cubic-bezier(0.4, 0, 0, 1);
+}

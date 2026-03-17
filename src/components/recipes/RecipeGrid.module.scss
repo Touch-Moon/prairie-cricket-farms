@@ -1,0 +1,51 @@
+@use "../../styles/mixins" as *;
+
+// ═══════════════════════════════════════════════════════════════
+//  RecipeGrid — Recipes list grid layout
+//  Mirrors ProductGrid: 2 cols mobile → 2 cols tablet → 3 cols desktop
+// ═══════════════════════════════════════════════════════════════
+
+.section {
+  background-color: $color-bg-primary;
+}
+
+.inner {
+  padding-left: $page-gutter-sm;
+  padding-right: $page-gutter-sm;
+  padding-top: $spacer-700;
+  padding-bottom: $spacer-900;
+
+  @include md {
+    padding-left: $page-gutter-md;
+    padding-right: $page-gutter-md;
+    padding-top: $spacer-800;
+  }
+
+  @include lg {
+    padding-left: $page-gutter-lg;
+    padding-right: $page-gutter-lg;
+    padding-bottom: $spacer-1000;
+  }
+}
+
+// ── Grid ───────────────────────────────────────────────────────
+
+.grid {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  max-width: $max-width-wide;
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px $space-4;
+
+  @include md {
+    gap: 64px $space-6;
+  }
+
+  @include lg {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 80px $space-6;
+  }
+}

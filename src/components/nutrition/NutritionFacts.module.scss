@@ -1,0 +1,200 @@
+@use "../../styles/mixins" as *;
+
+// ═══════════════════════════════════════════════════════════════
+//  NutritionFacts — Stat callouts (left) + Nutrition label (right)
+// ═══════════════════════════════════════════════════════════════
+
+.section {
+  background-color: $color-bg-primary;
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  gap: $space-12;
+  max-width: $max-width-wide;
+  margin: 0 auto;
+  padding-left: $page-gutter-sm;
+  padding-right: $page-gutter-sm;
+  @include section-spacing;
+
+  @include md {
+    padding-left: $page-gutter-md;
+    padding-right: $page-gutter-md;
+  }
+
+  @include lg {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: $space-20;
+    padding-left: $page-gutter-lg;
+    padding-right: $page-gutter-lg;
+  }
+}
+
+// ── Left — stat callouts ───────────────────────────────────────
+
+.colStats {
+  display: flex;
+  flex-direction: column;
+  gap: $space-8;
+
+  @include lg {
+    flex: 1;
+    position: sticky;
+    top: 120px;
+  }
+}
+
+.eyebrow {
+  @include eyebrow;
+  color: $color-brand-green-dark;
+}
+
+.heading {
+  font-family: $font-display;
+  font-style: italic;
+  font-weight: $fw-medium;
+  font-size: $fs-8xl;
+  line-height: $lh-display;
+  letter-spacing: $ls-tighter;
+  text-transform: uppercase;
+  color: $color-dark;
+
+  @include lg {
+    font-size: $fs-10xl;
+  }
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $space-4;
+  margin-top: $space-4;
+}
+
+.statCard {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: $space-6;
+  background-color: $color-brand-green;
+  border-radius: 2px;
+}
+
+.statValue {
+  font-family: $font-display;
+  font-style: italic;
+  font-weight: $fw-medium;
+  font-size: $fs-8xl;
+  line-height: 1;
+  letter-spacing: $ls-tighter;
+  color: $color-dark;
+}
+
+.statLabel {
+  font-family: $font-body;
+  font-weight: $fw-semibold;
+  font-size: $fs-sm;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: $color-dark;
+}
+
+.statSub {
+  font-family: $font-body;
+  font-weight: $fw-regular;
+  font-size: $fs-xs;
+  color: $color-dark;
+  opacity: 0.7;
+}
+
+// ── Right — nutrition label ────────────────────────────────────
+
+.colLabel {
+  @include lg {
+    flex: 0 0 380px;
+  }
+}
+
+.label {
+  border: 2px solid $color-dark;
+  padding: $space-4;
+  background-color: #fff;
+}
+
+.labelHeader {
+  margin-bottom: $space-2;
+}
+
+.labelTitle {
+  font-family: $font-body;
+  font-weight: 900;
+  font-size: 32px;
+  line-height: 1;
+  color: $color-dark;
+}
+
+.labelServing {
+  font-family: $font-body;
+  font-size: $fs-sm;
+  color: $color-dark;
+  margin-top: 4px;
+}
+
+.labelDividerThick {
+  height: 8px;
+  background-color: $color-dark;
+  margin: $space-2 0;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 5px 0;
+  border-bottom: 1px solid rgba($color-dark, 0.15);
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.rowIndent .cellName {
+  padding-left: $space-4;
+  font-weight: $fw-regular;
+  font-size: $fs-sm;
+}
+
+.rowBold .cellName,
+.rowBold .cellValue {
+  font-weight: $fw-bold;
+}
+
+.cellName {
+  font-family: $font-body;
+  font-size: $fs-base;
+  font-weight: $fw-semibold;
+  color: $color-dark;
+}
+
+.cellValue {
+  font-family: $font-body;
+  font-size: $fs-base;
+  font-weight: $fw-regular;
+  color: $color-dark;
+  white-space: nowrap;
+}
+
+.labelNote {
+  font-family: $font-body;
+  font-size: $fs-xs;
+  color: $color-text;
+  margin-top: $space-2;
+  line-height: $lh-relaxed;
+}
