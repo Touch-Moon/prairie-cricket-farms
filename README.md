@@ -5,7 +5,7 @@ New visual identity, design system, and production-ready e-commerce experience �
 
 **Role:** Design + Development &nbsp;·&nbsp; **Stack:** Next.js · GSAP · Supabase &nbsp;·&nbsp; **Year:** 2025–2026
 
-**[→ View Case Study](../CaseStudy.html)**
+**[→ View Case Study](https://prairie-cricket-farms.vercel.app/case-study.html)**
 
 ---
 
